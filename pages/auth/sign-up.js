@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import * as Yup from 'yup'
 import FormikForm from '../../components/FormikForm'
 import AuthNavigate from '../../components/AuthNavigate'
+import { fetchGuardarUsuario } from '../../services/user'
 const SignUpPage = () => {
   useEffect(() => {
     localStorage.clear()
@@ -43,17 +44,17 @@ const SignUpPage = () => {
       .required('El nombre es obligatorio'),
   })
   const handleSubmit = async (values) => {
-    // const { nombre, email, password } = values
-    // const res = await fetchAutenticarUsuario({
-    //   Nombre: nombre,
-    //   Email: email,
-    //   Password: password,
-    // })
-    console.log('sign up')
+    const { nombre, email, password } = values
+    const res = await fetchGuardarUsuario({
+      Nombre: nombre,
+      Email: email,
+      Password: password,
+    })
+    console.log(res)
   }
   return (
     <div className="h-screen w-full bg-[url('../public/imgs/loginimage.jpg')] px-4 pt-4 xl:pt-36">
-      <div className="max-w-lg px-4 pb-24 mx-auto bg-neutral-900">
+      <div className="mx-auto max-w-lg bg-neutral-900 px-4 pb-24">
         <AuthNavigate />
         <FormikForm
           inputForms={inputForms}

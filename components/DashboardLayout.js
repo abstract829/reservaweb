@@ -4,16 +4,16 @@ import { useState } from 'react'
 const DashboardLayout = ({ children }) => {
   const [openSidebar, setOpenSidebar] = useState(false)
   return (
-    <div className="flex h-screen w-100 min-h-100">
+    <div className="w-100 min-h-100 flex h-screen">
       <Sidebar collapsed={openSidebar} />
       <div className="w-full">
         <nav className="w-full py-2 shadow">
           <AiOutlineMenu
-            className="w-8 h-8 ml-2 cursor-pointer"
+            className="ml-2 h-8 w-8 cursor-pointer"
             onClick={() => setOpenSidebar(!openSidebar)}
           />
         </nav>
-        <div className="px-4 py-4 lg:px-36">
+        <div className="px-4 py-4 lg:px-4">
           <div className="p-8 shadow">{children}</div>
         </div>
       </div>

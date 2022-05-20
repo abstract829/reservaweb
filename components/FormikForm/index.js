@@ -1,6 +1,7 @@
 import { Formik, Form } from 'formik'
 import FormGroup from './FormGroup'
 import RenderIf from '../RenderIf'
+import LoaderWhen from '../LoaderWhen'
 
 const FormikForm = ({
   inputForms,
@@ -25,9 +26,9 @@ const FormikForm = ({
       }}
     >
       {({ errors, handleSubmit, isSubmitting }) => (
-        <Form onSubmit={handleSubmit} className="max-w-sm mx-auto">
+        <Form onSubmit={handleSubmit} className="mx-auto max-w-sm">
           <RenderIf isTrue={errors.submit}>
-            <span className="px-2 text-white bg-red-400">{errors.submit}</span>
+            <span className="bg-red-400 px-2 text-white">{errors.submit}</span>
           </RenderIf>
           {inputForms.map((input, index) => (
             <FormGroup
@@ -41,9 +42,9 @@ const FormikForm = ({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full mt-8 font-bold uppercase button"
+            className="button mt-8 w-full font-bold uppercase"
           >
-            {btnText}
+            <LoaderWhen isTrue={isSubmitting}>{btnText}</LoaderWhen>
           </button>
         </Form>
       )}
