@@ -9,6 +9,7 @@ export const ListadoUsuariosProvider = ({ children }) => {
   useEffect(() => {
     getSession()
     const fetchData = async () => {
+      setIsLoading(true)
       const res = await fetchListarUsuarios()
       console.log(res)
       if (res.codigo === 0) {

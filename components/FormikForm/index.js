@@ -1,7 +1,7 @@
 import { Formik, Form } from 'formik'
 import FormGroup from './FormGroup'
 import RenderIf from '../RenderIf'
-import LoaderWhen from '../LoaderWhen'
+import LoadIndicatorIf from '../LoadIndicatorIf'
 
 const FormikForm = ({
   inputForms,
@@ -42,9 +42,10 @@ const FormikForm = ({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="button mt-8 w-full font-bold uppercase"
+            className="button mt-8 flex w-full items-center justify-center font-bold uppercase"
           >
-            <LoaderWhen isTrue={isSubmitting}>{btnText}</LoaderWhen>
+            <LoadIndicatorIf isTrue={isSubmitting} />
+            {btnText}
           </button>
         </Form>
       )}

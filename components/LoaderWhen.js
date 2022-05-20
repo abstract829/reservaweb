@@ -1,6 +1,18 @@
-import Loading from './Loading'
+import { LoadPanel } from 'devextreme-react'
 
-const LoaderIf = ({ isTrue, children }) => {
-  return <>{isTrue ? <Loading /> : children}</>
+const LoaderWhen = ({ isTrue, children }) => {
+  return (
+    <>
+      {isTrue ? (
+        <LoadPanel
+          visible={isTrue}
+          shading={true}
+          shadingColor="rgba(0,0,0,0.4)"
+        />
+      ) : (
+        children
+      )}
+    </>
+  )
 }
-export default LoaderIf
+export default LoaderWhen
