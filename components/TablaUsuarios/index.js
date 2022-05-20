@@ -9,12 +9,11 @@ import {
 } from 'devextreme-react/data-grid'
 import useListadoUsuarios from '../../hooks/useListadoUsuarios'
 import LoaderWhen from '../LoaderWhen'
-import Loading from '../Loading'
 const TablaUsuarios = () => {
   const { listadoUsuarios, isLoading } = useListadoUsuarios()
   return (
     <LoaderWhen isTrue={isLoading}>
-      <div className="mx-auto max-w-5xl">
+      <div className="max-w-5xl mx-auto">
         <DataGrid
           columnAutoWidth={true}
           allowColumnReordering={true}
