@@ -26,9 +26,9 @@ const FormikForm = ({
       }}
     >
       {({ errors, handleSubmit, isSubmitting }) => (
-        <Form onSubmit={handleSubmit} className="mx-auto max-w-sm">
+        <Form onSubmit={handleSubmit} className="max-w-sm mx-auto">
           <RenderIf isTrue={errors.submit}>
-            <span className="bg-red-400 px-2 text-white">{errors.submit}</span>
+            <span className="px-2 text-white bg-red-400">{errors.submit}</span>
           </RenderIf>
           {inputForms.map((input, index) => (
             <FormGroup
@@ -37,12 +37,14 @@ const FormikForm = ({
               type={input.type}
               name={input.name}
               placeholder={input.placeholder}
+              options={input.options ? input.options : null}
             />
           ))}
+
           <button
             type="submit"
             disabled={isSubmitting}
-            className="button mt-8 flex w-full items-center justify-center font-bold uppercase"
+            className="flex items-center justify-center w-full mt-8 font-bold uppercase button"
           >
             <LoadIndicatorIf isTrue={isSubmitting} />
             {btnText}

@@ -3,28 +3,54 @@ import Link from 'next/link'
 import 'react-pro-sidebar/dist/css/styles.css'
 
 const Sidebar = ({ collapsed }) => {
+  const menuUsuarios = [
+    {
+      name: 'Home',
+      path: '/dashboard',
+    },
+    {
+      name: 'Lista de usuarios',
+      path: '/dashboard/lista-usuarios',
+    },
+    {
+      name: 'Lista de perfiles',
+      path: '/dashboard/lista-perfiles',
+    },
+  ]
+  const menuSalas = [
+    {
+      name: 'Lista de salas',
+      path: '/dashboard/lista-salas',
+    },
+  ]
   return (
     <ProSidebar collapsed={collapsed}>
       <Menu iconShape="square">
         <MenuItem>
           <div className="flex flex-col items-center justify-center">
             <img src="/imgs/logo.png" className="w-8" />
-            <span className="relative bottom-5 text-xl font-bold uppercase">
+            <span className="relative text-xl font-bold uppercase bottom-5">
               Don Melchor
             </span>
           </div>
         </MenuItem>
-        <SubMenu title="Administración">
-          <MenuItem>
-            <Link href="/dashboard">
-              <a>Home</a>
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link href="/dashboard/lista-usuarios">
-              <a>Lista de usuarios</a>
-            </Link>
-          </MenuItem>
+        <SubMenu title="Usuarios">
+          {menuUsuarios.map((menu) => (
+            <MenuItem key={menu.name}>
+              <Link href={menu.path}>
+                <a>{menu.name}</a>
+              </Link>
+            </MenuItem>
+          ))}
+        </SubMenu>
+        <SubMenu title="Salas">
+          {menuSalas.map((menu) => (
+            <MenuItem key={menu.name}>
+              <Link href={menu.path}>
+                <a>{menu.name}</a>
+              </Link>
+            </MenuItem>
+          ))}
         </SubMenu>
       </Menu>
     </ProSidebar>

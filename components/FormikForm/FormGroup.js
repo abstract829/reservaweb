@@ -1,25 +1,31 @@
 import { ErrorMessage, Field } from 'formik'
+import RenderIf from '../RenderIf'
 
-const FormGroup = ({
-  name,
-  label,
-  type,
-  placeholder,
-  isInvalid,
-  onBlur,
-  onChange,
-}) => {
+const FormGroup = ({ name, label, type, placeholder, options }) => {
   return (
     <div className="flex flex-col">
       <label className="mb-2 font-bold text-[#908161]" htmlFor={name}>
         {label}
       </label>
-      <Field
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        className="mb-2 rounded border-2 border-[#908161] p-2"
-      />
+      <RenderIf isTrue={type === 'select'}>
+        <Field as="select" name={name} className="input">
+          {options &&
+            options.map((op) => (
+              <option key={op.value} value={op.value}>
+                {op.text}
+              </option>
+            ))}
+        </Field>
+      </RenderIf>
+      <RenderIf isTrue={type !== 'select'}>
+        <Field
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          className="input"
+        />
+      </RenderIf>
+
       <span className="text-red-400">
         <ErrorMessage name={name} />
       </span>
