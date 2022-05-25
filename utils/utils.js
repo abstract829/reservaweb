@@ -11,5 +11,9 @@ export const setSession = (accessToken) => {
 }
 export const getSession = () => {
   let token = localStorage.getItem('accessToken')
-  setSession(token)
+  if (token) {
+    setSession(token)
+  } else {
+    setSession(null)
+  }
 }

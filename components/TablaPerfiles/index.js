@@ -5,11 +5,12 @@ import ModalComponent from '../Modal'
 import PlusButton from '../PlusButton'
 import AddPerfil from './AddPerfil'
 import EditPerfil from './EditPerfil'
+import Funciones from './Funciones'
 
 export default function TablaUsuarios() {
   const { listadoPerfiles, isLoading } = useListadoUsuarios()
   const { searchValue, handleChange, filterListado } = useSearch()
-  const columns = ['ID', 'Nombre', 'Activo']
+  const columns = ['ID', 'Nombre', 'Activo', 'Funciones']
   return (
     <>
       <LoaderWhen isTrue={isLoading}>
@@ -47,6 +48,17 @@ export default function TablaUsuarios() {
                     <td className="px-6 py-4">{perfil.PerfilId}</td>
                     <td className="px-6 py-4">{perfil.Nombre}</td>
                     <td className="px-6 py-4">{perfil.Activo}</td>
+                    <td>
+                      <ModalComponent
+                        title="Editar funciones"
+                        btn={
+                          <span className="px-6 py-4 font-medium text-right cursor-pointer text-primary hover:underline">
+                            Ver
+                          </span>
+                        }
+                        content={<Funciones perfil={perfil} />}
+                      />
+                    </td>
                     <td>
                       <ModalComponent
                         title="Editar Perfil"

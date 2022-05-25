@@ -1,7 +1,22 @@
 import FormikForm from '../FormikForm'
 import * as Yup from 'yup'
 import useListadoUsuarios from '../../hooks/useListadoUsuarios'
+import { fetchGuardarUsuario } from '../../services/user'
+import { useMutation, useQueryClient } from 'react-query'
+import RenderIf from '../RenderIf'
+import Alert from '../Alert'
+import Alerts from '../Alerts'
 const AddUsuario = () => {
+  const queryClient = useQueryClient()
+  const {
+    mutate: addUser,
+    isError,
+    isSuccess,
+  } = useMutation(fetchGuardarUsuario, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('listaUsuarios')
+    },
+  })
   const { listadoPerfilesActivos } = useListadoUsuarios()
   const inputForms = [
     {
@@ -15,6 +30,12 @@ const AddUsuario = () => {
       type: 'email',
       name: 'Email',
       placeholder: 'example@email.com',
+    },
+    {
+      label: 'Password',
+      type: 'password',
+      name: 'Password',
+      placeholder: '******',
     },
     {
       label: 'Activo',
@@ -37,6 +58,7 @@ const AddUsuario = () => {
   const initialValues = {
     Nombre: '',
     Email: '',
+    Password: '',
     Activo: 'SI',
     PerfilId: listadoPerfilesActivos[0].PerfilId.toString(),
   }
@@ -46,22 +68,35 @@ const AddUsuario = () => {
       .max(255)
       .required('Debe ingresar un email'),
     Nombre: Yup.string().max(255).required('Debe ingresar un nombre'),
+    Password: Yup.string().max(20).required('Debe ingresar una password'),
     Activo: Yup.string().required('Seleccione una opción'),
     PerfilId: Yup.string().required('Seleccione una opción'),
   })
   const handleSubmit = (values) => {
-    console.log(values)
+    const usuario = {
+      UsuarioId: 0,
+      ...values,
+    }
+    addUser(usuario)
   }
   return (
-    <div className="w-96">
-      <FormikForm
-        inputForms={inputForms}
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        submitFunction={handleSubmit}
-        btnText="Guardar"
+    <>
+      <div className="w-96">
+        <FormikForm
+          inputForms={inputForms}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          submitFunction={handleSubmit}
+          btnText="Guardar"
+        />
+      </div>
+      <Alerts
+        successIf={isSuccess}
+        failedIf={isError}
+        succesText="Usuario creado correctamente!"
+        failedText="Hubo un error inesperado"
       />
-    </div>
+    </>
   )
 }
 export default AddUsuario

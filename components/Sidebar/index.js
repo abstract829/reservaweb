@@ -34,7 +34,7 @@ const Sidebar = ({ collapsed }) => {
             </span>
           </div>
         </MenuItem>
-        <SubMenu title="Usuarios">
+        <SubMenu title="Usuarios" defaultOpen={true}>
           {menuUsuarios.map((menu) => (
             <MenuItem key={menu.name}>
               <Link href={menu.path}>
@@ -43,7 +43,7 @@ const Sidebar = ({ collapsed }) => {
             </MenuItem>
           ))}
         </SubMenu>
-        <SubMenu title="Salas">
+        <SubMenu title="Salas" defaultOpen={true}>
           {menuSalas.map((menu) => (
             <MenuItem key={menu.name}>
               <Link href={menu.path}>

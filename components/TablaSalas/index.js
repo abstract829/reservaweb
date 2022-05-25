@@ -3,6 +3,8 @@ import useSearch from '../../hooks/useSearch'
 import LoaderWhen from '../LoaderWhen'
 import ModalComponent from '../Modal'
 import PlusButton from '../PlusButton'
+import DiasBloqueados from './DiasBloqueados'
+import EditSala from './EditSala'
 
 export default function TablaUsuarios() {
   const { listadoSalas, isLoading } = useListadoSalas()
@@ -60,8 +62,16 @@ export default function TablaUsuarios() {
                     <td className="px-6 py-4 font-medium cursor-pointer text-primary hover:underline">
                       Ver
                     </td>
-                    <td className="px-6 py-4 font-medium cursor-pointer text-primary hover:underline">
-                      Ver
+                    <td>
+                      <ModalComponent
+                        title={`Dias Bloqueados - Sala ${sala.Nombre}`}
+                        btn={
+                          <span className="px-6 py-4 font-medium cursor-pointer text-primary hover:underline">
+                            Ver
+                          </span>
+                        }
+                        content={<DiasBloqueados sala={sala} />}
+                      />
                     </td>
                     <td>
                       <ModalComponent
@@ -71,7 +81,7 @@ export default function TablaUsuarios() {
                             Editar
                           </span>
                         }
-                        content={<h1>hola</h1>}
+                        content={<EditSala sala={sala} />}
                       />
                     </td>
                   </tr>

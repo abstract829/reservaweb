@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { fetchAutenticarUsuario } from '../services/user'
-import { setSession } from '../utils/utils'
+import { fetchAutenticarUsuario, fetchRefreshToken } from '../services/user'
+import { getSession, setSession } from '../utils/utils'
 export const AuthContext = createContext(null)
 
 const initialState = {
@@ -10,72 +10,59 @@ const initialState = {
   user: null,
 }
 export const AuthProvider = ({ children }) => {
-  const [state, setState] = useState(initialState)
+  const [user, setUser] = useState(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   useEffect(() => {
     const initialize = async () => {
-      try {
-        const accessToken = window.localStorage.getItem('accessToken')
-        if (accessToken) {
-          setSession(accessToken)
-          // const res = await fetchRefreshUser()
-          // const user = res.data
-          setState({
-            isAuthenticated: true,
-            isInitialized: true,
-            user: null,
-          })
-          console.log('refresh token')
+      setIsLoading(true)
+      let token = localStorage.getItem('accessToken')
+      if (token) {
+        setSession(token)
+        const res = await fetchRefreshToken()
+        if (res.codigo === 0) {
+          setIsAuthenticated(true)
+          setUser(res.data)
+          setSession(res.data.Token)
         } else {
-          console.log('not authenticated')
-          setState({
-            user: null,
-            isAuthenticated: false,
-            isInitialized: true,
-          })
+          router.push('/auth/sign-in')
         }
-      } catch (err) {
-        console.log('not authenticated')
-        setState({
-          isAuthenticated: false,
-          isInitialized: true,
-          user: null,
-        })
+      } else {
+        router.push('/auth/sign-in')
       }
+      setIsLoading(false)
     }
     initialize()
   }, [])
+
   const signIn = async (values) => {
+    setIsLoading(true)
     const { email, password } = values
     const res = await fetchAutenticarUsuario({
       Email: email,
       Password: password,
     })
-    console.log(res)
     if (res.codigo === 0) {
       setSession(res.data.Token)
-      setState({
-        isInitialized: false,
-        isAuthenticated: true,
-        user: { name: res.data.Nombre, email: res.data.Email },
-      })
+      setIsAuthenticated(true)
+      setIsLoading(false)
+      setUser(res.data)
       router.push('/dashboard')
     }
+    setIsLoading(false)
   }
   const signUp = async () => {
     console.log('sign-up')
   }
   const signOut = async () => {
     setSession(null)
-    setState({
-      isInitialized: false,
-      isAuthenticated: false,
-      user: null,
-    })
     router.push('/auth/sign-in')
   }
   return (
-    <AuthContext.Provider value={{ state, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ user, isAuthenticated, isLoading, signIn, signOut }}
+    >
       {children}
     </AuthContext.Provider>
   )

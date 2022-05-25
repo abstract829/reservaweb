@@ -1,4 +1,6 @@
 import { createContext, useEffect, useState } from 'react'
+import { useQuery } from 'react-query'
+import useAuth from '../hooks/useAuth'
 import {
   fetchListarPerfiles,
   fetchListarPerfilesActivos,
@@ -7,6 +9,18 @@ import {
 import { getSession } from '../utils/utils'
 export const ListadoUsuariosContext = createContext(null)
 export const ListadoUsuariosProvider = ({ children }) => {
+  const { isAuthenticated } = useAuth()
+  const listaUsuarios = useQuery(['listaUsuarios'], fetchListarUsuarios, {
+    enabled: isAuthenticated,
+  })
+  const listaPerfiles = useQuery(['listaPerfiles'], fetchListarPerfiles, {
+    enabled: isAuthenticated,
+  })
+  const listaPerfilesActivos = useQuery(
+    ['listaPerfilesActivos'],
+    fetchListarPerfilesActivos,
+    { enabled: isAuthenticated }
+  )
   const [listadoUsuarios, setListadoUsuarios] = useState(null)
   const [listadoPerfiles, setListadoPerfiles] = useState(null)
   const [listadoPerfilesActivos, setListadoPerfilesActivos] = useState(null)
@@ -14,24 +28,14 @@ export const ListadoUsuariosProvider = ({ children }) => {
 
   useEffect(() => {
     getSession()
-    const fetchData = async () => {
-      setIsLoading(true)
-      let res = await fetchListarUsuarios()
-      if (res.codigo === 0) {
-        setListadoUsuarios(res.data)
-      }
-      res = await fetchListarPerfiles()
-      if (res.codigo === 0) {
-        setListadoPerfiles(res.data)
-      }
-      res = await fetchListarPerfilesActivos()
-      if (res.codigo === 0) {
-        setListadoPerfilesActivos(res.data)
-      }
+    setIsLoading(true)
+    if (listaUsuarios.data && listaPerfiles.data && listaPerfilesActivos.data) {
+      setListadoUsuarios(listaUsuarios.data.data)
+      setListadoPerfiles(listaPerfiles.data.data)
+      setListadoPerfilesActivos(listaPerfilesActivos.data.data)
       setIsLoading(false)
     }
-    fetchData()
-  }, [])
+  }, [listaUsuarios.data, listaPerfiles.data, listaPerfilesActivos.data])
   return (
     <ListadoUsuariosContext.Provider
       value={{

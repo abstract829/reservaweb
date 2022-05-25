@@ -1,5 +1,10 @@
 import api from '../utils/axios'
 
+export const fetchRefreshToken = async () => {
+  const { data } = await api.get('/api/usuario/tokenrefresh')
+  return data
+}
+
 export const fetchAutenticarUsuario = async ({
   PerfilId,
   Nombre,
@@ -12,13 +17,14 @@ export const fetchAutenticarUsuario = async ({
   return data
 }
 export const fetchGuardarUsuario = async ({
+  UsuarioId,
   PerfilId,
   Nombre,
   Email,
   Password,
   Activo,
 }) => {
-  const request = { PerfilId, Nombre, Email, Password, Activo }
+  const request = { UsuarioId, PerfilId, Nombre, Email, Password, Activo }
   const { data } = await api.post('/api/usuario/guardar', request)
   return data
 }

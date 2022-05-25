@@ -18,7 +18,7 @@ export const fetchSalaPorId = async ({ id }) => {
 export const fetchGuardarSala = async ({
   SalaId,
   Nombre,
-  DisponibleOnline,
+  DisponibleOnLine,
   Activo,
   MisTemporadas,
   MisFechasBloqueadas,
@@ -27,12 +27,13 @@ export const fetchGuardarSala = async ({
   const request = {
     SalaId,
     Nombre,
-    DisponibleOnline,
+    DisponibleOnLine,
     Activo,
     MisTemporadas,
     MisFechasBloqueadas,
     DiasBloqueados,
   }
+  console.log(request)
   const { data } = await api.post(`/api/sala/guardar`, request)
   return data
 }

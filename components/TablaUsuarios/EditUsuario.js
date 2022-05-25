@@ -1,8 +1,23 @@
 import FormikForm from '../FormikForm'
 import * as Yup from 'yup'
 import useListadoUsuarios from '../../hooks/useListadoUsuarios'
+import { fetchGuardarUsuario } from '../../services/user'
+import { useMutation, useQueryClient } from 'react-query'
+import RenderIf from '../RenderIf'
+import Alert from '../Alert'
+import Alerts from '../Alerts'
 const EditUsuario = ({ user }) => {
   const { listadoPerfilesActivos } = useListadoUsuarios()
+  const queryClient = useQueryClient()
+  const {
+    mutate: editUser,
+    isError,
+    isSuccess,
+  } = useMutation(fetchGuardarUsuario, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('listaUsuarios')
+    },
+  })
   const inputForms = [
     {
       label: 'Nombre',
@@ -49,19 +64,31 @@ const EditUsuario = ({ user }) => {
     Activo: Yup.string().required('Seleccione una opción'),
     PerfilId: Yup.string().required('Seleccione una opción'),
   })
-  const handleSubmit = (values) => {
-    console.log(values)
+  const handleSubmit = async (values) => {
+    const usuario = {
+      ...user,
+      ...values,
+    }
+    editUser(usuario)
   }
   return (
-    <div className="w-96">
-      <FormikForm
-        inputForms={inputForms}
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        submitFunction={handleSubmit}
-        btnText="Guardar"
+    <>
+      <div className="w-96">
+        <FormikForm
+          inputForms={inputForms}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          submitFunction={handleSubmit}
+          btnText="Guardar"
+        />
+      </div>
+      <Alerts
+        successIf={isSuccess}
+        failedIf={isError}
+        succesText="Usuario editado correctamente!"
+        failedText="Hubo un error inesperado"
       />
-    </div>
+    </>
   )
 }
 export default EditUsuario
