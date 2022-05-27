@@ -1,6 +1,19 @@
 import FormikForm from '../FormikForm'
 import * as Yup from 'yup'
+import { useMutation, useQueryClient } from 'react-query'
+import Alerts from '../Alerts'
+import { fetchGuardarPerfil } from '../../services/user'
 const EditPerfil = ({ perfil }) => {
+  const queryClient = useQueryClient()
+  const {
+    mutate: editPerfil,
+    isError,
+    isSuccess,
+  } = useMutation(fetchGuardarPerfil, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['listaPerfiles'])
+    },
+  })
   const inputForms = [
     {
       label: 'Nombre',
@@ -27,7 +40,7 @@ const EditPerfil = ({ perfil }) => {
     Activo: Yup.string().required('Seleccione una opción'),
   })
   const handleSubmit = (values) => {
-    console.log(values)
+    editPerfil({ ...perfil, ...values })
   }
   return (
     <div className="w-96">
@@ -37,6 +50,12 @@ const EditPerfil = ({ perfil }) => {
         validationSchema={validationSchema}
         submitFunction={handleSubmit}
         btnText="Guardar"
+      />
+      <Alerts
+        successIf={isSuccess}
+        failedIf={isError}
+        succesText="Perfil editado correctamente!"
+        failedText="Hubo un error inesperado"
       />
     </div>
   )

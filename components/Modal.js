@@ -18,12 +18,16 @@ export default function ModalComponent({
   content,
   btn = 'Open Modal',
   title = 'Modal title',
+  onOpen = () => null,
+  onClose = () => null,
 }) {
   const [modalIsOpen, setIsOpen] = React.useState(false)
   function openModal() {
+    onOpen()
     setIsOpen(true)
   }
   function closeModal() {
+    onClose()
     setIsOpen(false)
   }
 

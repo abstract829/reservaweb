@@ -7,15 +7,7 @@ const FormGroup = ({ name, label, type, placeholder, options }) => {
       <label className="mb-2 font-bold text-[#908161]" htmlFor={name}>
         {label}
       </label>
-      <RenderIf isTrue={type === 'checkbox'}>
-        {options &&
-          options.map((op) => (
-            <label key={op.id}>
-              <Field type="checkbox" name={name} value={op.nombre} />
-              {label}
-            </label>
-          ))}
-      </RenderIf>
+
       <RenderIf isTrue={type === 'select'}>
         <Field as="select" name={name} className="input">
           {options &&

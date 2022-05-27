@@ -1,26 +1,51 @@
-const Funcion = ({ funcion, myFunciones, perfil }) => {
-  const handleChange = (e, funcion) => {
+import useSelecteds from '../../../hooks/useSelecteds'
+import LoaderWhen from '../../LoaderWhen'
+
+const Funcion = ({ funcion }) => {
+  const { selectedPerfil, setSelectedPerfil } = useSelecteds()
+
+  const handleChange = (e) => {
+    const obj = {
+      FuncionId: funcion.id,
+      PerfilId: selectedPerfil.PerfilId,
+    }
     if (e.target.checked) {
-      console.log('checked', funcion)
+      setSelectedPerfil((prev) => {
+        return {
+          ...prev,
+          MisFunciones: [...prev.MisFunciones, obj],
+        }
+      })
     } else {
-      console.log('not checked')
+      setSelectedPerfil((prev) => {
+        return {
+          ...prev,
+          MisFunciones: prev.MisFunciones.filter(
+            (f) => f.FuncionId !== funcion.id
+          ),
+        }
+      })
     }
   }
   const hasFunction = (id) => {
-    return myFunciones.data.data.find(
-      (funcion) => Number(funcion.FuncionId) === Number(id)
-    )
+    if (selectedPerfil) {
+      return selectedPerfil.MisFunciones.find(
+        (funcion) => Number(funcion.FuncionId) === Number(id)
+      )
+    } else return false
   }
   return (
-    <div className="flex items-center gap-1 my-2 ">
-      <input
-        type="checkbox"
-        defaultChecked={hasFunction(funcion.id)}
-        name={funcion.id}
-        onChange={(e) => handleChange(e, funcion)}
-      />
-      <label className="font-bold text-primary">{funcion.nombre}</label>
-    </div>
+    <LoaderWhen isTrue={!selectedPerfil}>
+      <div className="flex items-center gap-1 my-2 ">
+        <input
+          type="checkbox"
+          defaultChecked={hasFunction(funcion.id)}
+          name={funcion.id}
+          onChange={handleChange}
+        />
+        <label className="font-bold text-primary">{funcion.nombre}</label>
+      </div>
+    </LoaderWhen>
   )
 }
 export default Funcion

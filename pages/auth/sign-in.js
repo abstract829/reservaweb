@@ -39,7 +39,9 @@ const SignInPage = () => {
   return (
     <div className="h-screen w-full bg-[url('../public/imgs/loginimage.jpg')] px-4 pt-36">
       <div className="max-w-lg px-4 pb-24 mx-auto bg-neutral-900 ">
-        <AuthNavigate />
+        <h2 className="py-8 font-bold text-center uppercase text-primary">
+          Iniciar sesión
+        </h2>
         <FormikForm
           inputForms={inputForms}
           initialValues={initialValues}

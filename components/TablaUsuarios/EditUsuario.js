@@ -15,7 +15,7 @@ const EditUsuario = ({ user }) => {
     isSuccess,
   } = useMutation(fetchGuardarUsuario, {
     onSuccess: () => {
-      queryClient.invalidateQueries('listaUsuarios')
+      queryClient.invalidateQueries(['listaUsuarios'])
     },
   })
   const inputForms = [

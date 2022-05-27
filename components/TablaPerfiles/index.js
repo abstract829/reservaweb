@@ -1,5 +1,6 @@
 import useListadoUsuarios from '../../hooks/useListadoUsuarios'
 import useSearch from '../../hooks/useSearch'
+import useSelecteds from '../../hooks/useSelecteds'
 import LoaderWhen from '../LoaderWhen'
 import ModalComponent from '../Modal'
 import PlusButton from '../PlusButton'
@@ -10,6 +11,7 @@ import Funciones from './Funciones'
 export default function TablaUsuarios() {
   const { listadoPerfiles, isLoading } = useListadoUsuarios()
   const { searchValue, handleChange, filterListado } = useSearch()
+  const { setSelectedPerfil } = useSelecteds()
   const columns = ['ID', 'Nombre', 'Activo', 'Funciones']
   return (
     <>
@@ -56,6 +58,7 @@ export default function TablaUsuarios() {
                             Ver
                           </span>
                         }
+                        onClose={() => setSelectedPerfil(null)}
                         content={<Funciones perfil={perfil} />}
                       />
                     </td>
