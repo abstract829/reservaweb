@@ -35,7 +35,7 @@ export default function ModalComponent({
     <div>
       <button onClick={openModal}>{btn}</button>
       <Modal isOpen={modalIsOpen} style={customStyles}>
-        <h3 className="mb-8 bg-[#908161] py-2 text-center text-white">
+        <h3 className="mb-8 bg-[#908161] p-2 text-center text-white ">
           {title}
         </h3>
         <div className="px-4 py-2">

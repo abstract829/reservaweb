@@ -1,6 +1,7 @@
-import useListadoUsuarios from '../../hooks/useListadoUsuarios'
+import { useQueryPerfiles } from '../../hooks/perfiles'
 import useSearch from '../../hooks/useSearch'
-import useSelecteds from '../../hooks/useSelecteds'
+import Alert from '../Alert'
+import DefaultTable from '../DefaultTable'
 import LoaderWhen from '../LoaderWhen'
 import ModalComponent from '../Modal'
 import PlusButton from '../PlusButton'
@@ -9,10 +10,12 @@ import EditPerfil from './EditPerfil'
 import Funciones from './Funciones'
 
 export default function TablaUsuarios() {
-  const { listadoPerfiles, isLoading } = useListadoUsuarios()
+  const { data: listadoPerfiles, isLoading, isError } = useQueryPerfiles()
   const { searchValue, handleChange, filterListado } = useSearch()
-  const { setSelectedPerfil } = useSelecteds()
   const columns = ['ID', 'Nombre', 'Activo', 'Funciones']
+  if (isError) {
+    return <Alert type="failed">Hubo un error inesperado</Alert>
+  }
   return (
     <>
       <LoaderWhen isTrue={isLoading}>
@@ -28,56 +31,30 @@ export default function TablaUsuarios() {
           value={searchValue}
           onChange={handleChange}
         />
-
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table className="w-full text-sm text-left text-gray-500 ">
-            <thead className="text-xs text-white uppercase bg-primary ">
-              <tr>
-                {columns.map((column) => (
-                  <th key={column} scope="col" className="px-6 py-3">
-                    {column}
-                  </th>
-                ))}
-                <th scope="col" className="px-6 py-3">
-                  <span className="sr-only">Edit</span>
-                </th>
+        <DefaultTable columns={columns} extra={1}>
+          {listadoPerfiles &&
+            filterListado(listadoPerfiles.data).map((perfil) => (
+              <tr key={perfil.PerfilId} className="bg-white border-b ">
+                <td className="td-default">{perfil.PerfilId}</td>
+                <td className="td-default">{perfil.Nombre}</td>
+                <td className="td-default">{perfil.Activo}</td>
+                <td>
+                  <ModalComponent
+                    title="Editar funciones"
+                    btn={<span className="td-edited">Ver</span>}
+                    content={<Funciones id={perfil.PerfilId} />}
+                  />
+                </td>
+                <td className="text-right">
+                  <ModalComponent
+                    title="Editar Perfil"
+                    btn={<span className="td-edited">Editar</span>}
+                    content={<EditPerfil id={perfil.PerfilId} />}
+                  />
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {listadoPerfiles &&
-                filterListado(listadoPerfiles).map((perfil) => (
-                  <tr key={perfil.PerfilId} className="bg-white border-b ">
-                    <td className="px-6 py-4">{perfil.PerfilId}</td>
-                    <td className="px-6 py-4">{perfil.Nombre}</td>
-                    <td className="px-6 py-4">{perfil.Activo}</td>
-                    <td>
-                      <ModalComponent
-                        title="Editar funciones"
-                        btn={
-                          <span className="px-6 py-4 font-medium text-right cursor-pointer text-primary hover:underline">
-                            Ver
-                          </span>
-                        }
-                        onClose={() => setSelectedPerfil(null)}
-                        content={<Funciones perfil={perfil} />}
-                      />
-                    </td>
-                    <td>
-                      <ModalComponent
-                        title="Editar Perfil"
-                        btn={
-                          <span className="px-6 py-4 font-medium text-right cursor-pointer text-primary hover:underline">
-                            Editar
-                          </span>
-                        }
-                        content={<EditPerfil perfil={perfil} />}
-                      />
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+        </DefaultTable>
       </LoaderWhen>
     </>
   )

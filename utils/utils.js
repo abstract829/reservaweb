@@ -17,3 +17,13 @@ export const getSession = () => {
     setSession(null)
   }
 }
+export const dateParse = (value) => {
+  let date = new Date(value)
+  let month = date.getMonth() + 1
+  let day = date.getDate()
+  let year = date.getFullYear()
+
+  return `${day < 10 ? '0' + day : day}/${
+    month < 10 ? '0' + month : month
+  }/${year}`
+}

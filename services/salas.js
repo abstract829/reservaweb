@@ -1,9 +1,9 @@
 import api from '../utils/axios'
-export const fetchTodasLasSalas = async () => {
+export const fetchListarSalas = async () => {
   const { data } = await api.get('/api/sala/listar')
   return data
 }
-export const fetchTodasLasSalasActivas = async () => {
+export const fetchListarSalasActivas = async () => {
   const { data } = await api.get('/api/sala/listarActivas')
   return data
 }
@@ -11,7 +11,7 @@ export const fetchEliminarSala = async ({ SalaId }) => {
   const { data } = await api.post('/api/sala/eliminar', { SalaId })
   return data
 }
-export const fetchSalaPorId = async ({ id }) => {
+export const fetchObtenerSalaPorId = async ({ id }) => {
   const { data } = await api.get(`/api/sala/obtener/${id}`)
   return data
 }
@@ -33,7 +33,6 @@ export const fetchGuardarSala = async ({
     MisFechasBloqueadas,
     DiasBloqueados,
   }
-  console.log(request)
   const { data } = await api.post(`/api/sala/guardar`, request)
   return data
 }

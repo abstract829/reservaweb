@@ -13,6 +13,12 @@
 .text-primary{
   @apply text-[#908161]
 }
+.td-default{
+  @apply px-6 py-4
+}
+.td-edited{
+  @apply px-6 py-4 font-medium cursor-pointer text-primary hover:underline
+}
 /* SPINNER LOADER*/
 .lds-ring {
   display: inline-block;

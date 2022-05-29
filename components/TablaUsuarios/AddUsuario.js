@@ -1,23 +1,23 @@
-import FormikForm from '../FormikForm'
 import * as Yup from 'yup'
-import useListadoUsuarios from '../../hooks/useListadoUsuarios'
-import { fetchGuardarUsuario } from '../../services/user'
-import { useMutation, useQueryClient } from 'react-query'
-import RenderIf from '../RenderIf'
+import { useMutateUser } from '../../hooks/users'
+import { useQueryPerfilesActivos } from '../../hooks/perfiles'
+import FormikForm from '../FormikForm'
 import Alert from '../Alert'
 import Alerts from '../Alerts'
 const AddUsuario = () => {
-  const queryClient = useQueryClient()
+  const {
+    data: listadoPerfilesActivos,
+    isLoading,
+    isError,
+  } = useQueryPerfilesActivos()
   const {
     mutate: addUser,
-    isError,
+    isError: isErrorMutating,
     isSuccess,
-  } = useMutation(fetchGuardarUsuario, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('listaUsuarios')
-    },
-  })
-  const { listadoPerfilesActivos } = useListadoUsuarios()
+  } = useMutateUser()
+  if (isError) {
+    return <Alert type="failed">Hubo un error inesperado</Alert>
+  }
   const inputForms = [
     {
       label: 'Nombre',
@@ -50,9 +50,11 @@ const AddUsuario = () => {
       label: 'Perfil',
       type: 'select',
       name: 'PerfilId',
-      options: listadoPerfilesActivos.map((p) => {
-        return { value: p.PerfilId, text: p.Nombre }
-      }),
+      options:
+        listadoPerfilesActivos &&
+        listadoPerfilesActivos.data.map((p) => {
+          return { value: p.PerfilId, text: p.Nombre }
+        }),
     },
   ]
   const initialValues = {
@@ -60,7 +62,7 @@ const AddUsuario = () => {
     Email: '',
     Password: '',
     Activo: 'SI',
-    PerfilId: listadoPerfilesActivos[0].PerfilId.toString(),
+    PerfilId: listadoPerfilesActivos.data[0].PerfilId.toString(),
   }
   const validationSchema = Yup.object().shape({
     Email: Yup.string()
@@ -92,7 +94,7 @@ const AddUsuario = () => {
       </div>
       <Alerts
         successIf={isSuccess}
-        failedIf={isError}
+        failedIf={isErrorMutating}
         succesText="Usuario creado correctamente!"
         failedText="Hubo un error inesperado"
       />

@@ -1,23 +1,24 @@
+import { useMutateUser } from '../../hooks/users'
+import { useQueryPerfilesActivos } from '../../hooks/perfiles'
 import FormikForm from '../FormikForm'
 import * as Yup from 'yup'
-import useListadoUsuarios from '../../hooks/useListadoUsuarios'
-import { fetchGuardarUsuario } from '../../services/user'
-import { useMutation, useQueryClient } from 'react-query'
-import RenderIf from '../RenderIf'
 import Alert from '../Alert'
 import Alerts from '../Alerts'
+import LoaderWhen from '../LoaderWhen'
 const EditUsuario = ({ user }) => {
-  const { listadoPerfilesActivos } = useListadoUsuarios()
-  const queryClient = useQueryClient()
+  const {
+    data: listadoPerfilesActivos,
+    isLoading,
+    isError,
+  } = useQueryPerfilesActivos()
   const {
     mutate: editUser,
-    isError,
+    isError: isErrorMutating,
     isSuccess,
-  } = useMutation(fetchGuardarUsuario, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['listaUsuarios'])
-    },
-  })
+  } = useMutateUser()
+  if (isError) {
+    return <Alert type="failed">Hubo un error inesperado</Alert>
+  }
   const inputForms = [
     {
       label: 'Nombre',
@@ -44,9 +45,11 @@ const EditUsuario = ({ user }) => {
       label: 'Perfil',
       type: 'select',
       name: 'PerfilId',
-      options: listadoPerfilesActivos.map((p) => {
-        return { value: p.PerfilId, text: p.Nombre }
-      }),
+      options:
+        listadoPerfilesActivos &&
+        listadoPerfilesActivos.data.map((p) => {
+          return { value: p.PerfilId, text: p.Nombre }
+        }),
     },
   ]
   const initialValues = {
@@ -72,7 +75,7 @@ const EditUsuario = ({ user }) => {
     editUser(usuario)
   }
   return (
-    <>
+    <LoaderWhen isTrue={isLoading}>
       <div className="w-96">
         <FormikForm
           inputForms={inputForms}
@@ -84,11 +87,11 @@ const EditUsuario = ({ user }) => {
       </div>
       <Alerts
         successIf={isSuccess}
-        failedIf={isError}
+        failedIf={isErrorMutating}
         succesText="Usuario editado correctamente!"
         failedText="Hubo un error inesperado"
       />
-    </>
+    </LoaderWhen>
   )
 }
 export default EditUsuario

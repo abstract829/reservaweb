@@ -7,7 +7,6 @@ const FormGroup = ({ name, label, type, placeholder, options }) => {
       <label className="mb-2 font-bold text-[#908161]" htmlFor={name}>
         {label}
       </label>
-
       <RenderIf isTrue={type === 'select'}>
         <Field as="select" name={name} className="input">
           {options &&
@@ -18,7 +17,7 @@ const FormGroup = ({ name, label, type, placeholder, options }) => {
             ))}
         </Field>
       </RenderIf>
-      <RenderIf isTrue={type !== 'select' && type !== 'checkbox'}>
+      <RenderIf isTrue={type !== 'select'}>
         <Field
           type={type}
           name={name}

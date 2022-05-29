@@ -1,19 +1,15 @@
+import { useMutateSala, useQuerySalaById } from '../../hooks/salas'
 import FormikForm from '../FormikForm'
 import * as Yup from 'yup'
-import { useMutation, useQueryClient } from 'react-query'
-import { fetchGuardarSala } from '../../services/salas'
 import Alerts from '../Alerts'
-const EditSala = ({ sala }) => {
-  const queryClient = useQueryClient()
-  const {
-    mutate: editSala,
-    isError,
-    isSuccess,
-  } = useMutation(fetchGuardarSala, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('listaSalas')
-    },
-  })
+import LoaderWhen from '../LoaderWhen'
+import Alert from '../Alert'
+const EditSala = ({ id }) => {
+  const { mutate: editSala, isErrorMutating, isSuccess } = useMutateSala()
+  const { data: sala, isError, isLoading } = useQuerySalaById({ id })
+  if (isError) {
+    return <Alert type="failed">Hubo un error inesperado</Alert>
+  }
   const inputForms = [
     {
       label: 'Nombre',
@@ -41,9 +37,9 @@ const EditSala = ({ sala }) => {
     },
   ]
   const initialValues = {
-    Nombre: sala.Nombre,
-    DisponibleOnLine: sala.DisponibleOnLine,
-    Activo: sala.Activo,
+    Nombre: sala && sala.data.Nombre,
+    DisponibleOnLine: sala && sala.data.DisponibleOnLine,
+    Activo: sala && sala.data.Activo,
   }
   const validationSchema = Yup.object().shape({
     Nombre: Yup.string().max(255).required('Debe ingresar un nombre'),
@@ -52,27 +48,30 @@ const EditSala = ({ sala }) => {
   })
   const handleSubmit = (values) => {
     const request = {
-      ...sala,
+      ...sala.data,
       ...values,
     }
+    console.log(request)
     editSala(request)
   }
   return (
-    <div className="w-96">
-      <FormikForm
-        inputForms={inputForms}
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        submitFunction={handleSubmit}
-        btnText="Guardar"
-      />
-      <Alerts
-        successIf={isSuccess}
-        failedIf={isError}
-        succesText="Sala editada correctamente!"
-        failedText="Hubo un error inesperado"
-      />
-    </div>
+    <LoaderWhen isTrue={isLoading}>
+      <div className="w-96">
+        <FormikForm
+          inputForms={inputForms}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          submitFunction={handleSubmit}
+          btnText="Guardar"
+        />
+        <Alerts
+          successIf={isSuccess}
+          failedIf={isErrorMutating}
+          succesText="Sala editada correctamente!"
+          failedText="Hubo un error inesperado"
+        />
+      </div>
+    </LoaderWhen>
   )
 }
 export default EditSala

@@ -1,19 +1,15 @@
 import FormikForm from '../FormikForm'
 import * as Yup from 'yup'
-import { useMutation, useQueryClient } from 'react-query'
 import Alerts from '../Alerts'
-import { fetchGuardarPerfil } from '../../services/user'
-const EditPerfil = ({ perfil }) => {
-  const queryClient = useQueryClient()
-  const {
-    mutate: editPerfil,
-    isError,
-    isSuccess,
-  } = useMutation(fetchGuardarPerfil, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['listaPerfiles'])
-    },
-  })
+import { useMutatePerfil, useQueryPerfilById } from '../../hooks/perfiles'
+import LoaderWhen from '../LoaderWhen'
+import Alert from '../Alert'
+const EditPerfil = ({ id }) => {
+  const { mutate: editPerfil, isErrorMutating, isSuccess } = useMutatePerfil()
+  const { data: perfil, isLoading, isError } = useQueryPerfilById({ id })
+  if (isError) {
+    return <Alert type="failed">Hubo un error inesperado</Alert>
+  }
   const inputForms = [
     {
       label: 'Nombre',
@@ -32,32 +28,34 @@ const EditPerfil = ({ perfil }) => {
     },
   ]
   const initialValues = {
-    Nombre: perfil.Nombre,
-    Activo: perfil.Activo,
+    Nombre: perfil && perfil.data.Nombre,
+    Activo: perfil && perfil.data.Activo,
   }
   const validationSchema = Yup.object().shape({
     Nombre: Yup.string().max(255).required('Debe ingresar un nombre'),
     Activo: Yup.string().required('Seleccione una opción'),
   })
   const handleSubmit = (values) => {
-    editPerfil({ ...perfil, ...values })
+    editPerfil({ ...perfil.data, ...values })
   }
   return (
-    <div className="w-96">
-      <FormikForm
-        inputForms={inputForms}
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        submitFunction={handleSubmit}
-        btnText="Guardar"
-      />
-      <Alerts
-        successIf={isSuccess}
-        failedIf={isError}
-        succesText="Perfil editado correctamente!"
-        failedText="Hubo un error inesperado"
-      />
-    </div>
+    <LoaderWhen isTrue={isLoading}>
+      <div className="w-96">
+        <FormikForm
+          inputForms={inputForms}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          submitFunction={handleSubmit}
+          btnText="Guardar"
+        />
+        <Alerts
+          successIf={isSuccess}
+          failedIf={isErrorMutating}
+          succesText="Perfil editado correctamente!"
+          failedText="Hubo un error inesperado"
+        />
+      </div>
+    </LoaderWhen>
   )
 }
 export default EditPerfil

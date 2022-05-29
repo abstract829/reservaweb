@@ -1,20 +1,19 @@
+import { useMutateSala, useQuerySalaById } from '../../hooks/salas'
 import FormikForm from '../FormikForm'
 import * as Yup from 'yup'
-import { fetchGuardarSala } from '../../services/salas'
-import { useMutation, useQueryClient } from 'react-query'
 import Alerts from '../Alerts'
-const DiasBloqueados = ({ sala }) => {
-  console.log(sala)
-  const queryClient = useQueryClient()
+import LoaderWhen from '../LoaderWhen'
+import Alert from '../Alert'
+const DiasBloqueados = ({ id }) => {
+  const { data: sala, isLoading, isError } = useQuerySalaById({ id })
   const {
     mutate: editSala,
-    isError,
+    isError: isErrorMutating,
     isSuccess,
-  } = useMutation(fetchGuardarSala, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('listaSalas')
-    },
-  })
+  } = useMutateSala()
+  if (isError) {
+    return <Alert type="failed">Hubo un error inesperado</Alert>
+  }
   const inputForms = [
     {
       label: 'Lunes',
@@ -81,15 +80,13 @@ const DiasBloqueados = ({ sala }) => {
     },
   ]
   const initialValues = {
-    Lunes: sala.DiasBloqueados.Lunes ? sala.DiasBloqueados.Lunes : 'NO',
-    Martes: sala.DiasBloqueados.Martes ? sala.DiasBloqueados.Martes : 'NO',
-    Miercoles: sala.DiasBloqueados.Miercoles
-      ? sala.DiasBloqueados.Miercoles
-      : 'NO',
-    Jueves: sala.DiasBloqueados.Jueves ? sala.DiasBloqueados.Jueves : 'NO',
-    Viernes: sala.DiasBloqueados.Viernes ? sala.DiasBloqueados.Viernes : 'NO',
-    Sabado: sala.DiasBloqueados.Sabado ? sala.DiasBloqueados.Sabado : 'NO',
-    Domingo: sala.DiasBloqueados.Domingo ? sala.DiasBloqueados.Domingo : 'NO',
+    Lunes: sala && sala.data.DiasBloqueados.Lunes,
+    Martes: sala && sala.data.DiasBloqueados.Martes,
+    Miercoles: sala && sala.data.DiasBloqueados.Miercoles,
+    Jueves: sala && sala.data.DiasBloqueados.Jueves,
+    Viernes: sala && sala.data.DiasBloqueados.Viernes,
+    Sabado: sala && sala.data.DiasBloqueados.Sabado,
+    Domingo: sala && sala.data.DiasBloqueados.Domingo,
   }
   const validationSchema = Yup.object().shape({
     Lunes: Yup.string().required('Selecciona una opción'),
@@ -102,30 +99,32 @@ const DiasBloqueados = ({ sala }) => {
   })
   const handleSubmit = (values) => {
     const request = {
-      ...sala,
+      ...sala.data,
       DiasBloqueados: {
-        ...sala.DiasBloqueados,
+        ...sala.data.DiasBloqueados,
         ...values,
       },
     }
     editSala(request)
   }
   return (
-    <div className="w-96">
-      <FormikForm
-        inputForms={inputForms}
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        submitFunction={handleSubmit}
-        btnText="Guardar"
-      />
-      <Alerts
-        successIf={isSuccess}
-        failedIf={isError}
-        succesText="Sala editada correctamente!"
-        failedText="Hubo un error inesperado"
-      />
-    </div>
+    <LoaderWhen isTrue={isLoading}>
+      <div className="w-96">
+        <FormikForm
+          inputForms={inputForms}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          submitFunction={handleSubmit}
+          btnText="Guardar"
+        />
+        <Alerts
+          successIf={isSuccess}
+          failedIf={isErrorMutating}
+          succesText="Dias editados correctamente!"
+          failedText="Hubo un error inesperado"
+        />
+      </div>
+    </LoaderWhen>
   )
 }
 export default DiasBloqueados

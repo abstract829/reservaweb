@@ -1,19 +1,9 @@
 import FormikForm from '../FormikForm'
 import * as Yup from 'yup'
-import { useMutation, useQueryClient } from 'react-query'
-import { fetchGuardarPerfil } from '../../services/user'
 import Alerts from '../Alerts'
+import { useMutatePerfil } from '../../hooks/perfiles'
 const AddPerfil = () => {
-  const queryClient = useQueryClient()
-  const {
-    mutate: editPerfil,
-    isError,
-    isSuccess,
-  } = useMutation(fetchGuardarPerfil, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['listaPerfiles'])
-    },
-  })
+  const { mutate: editPerfil, isError, isSuccess } = useMutatePerfil()
   const inputForms = [
     {
       label: 'Nombre',

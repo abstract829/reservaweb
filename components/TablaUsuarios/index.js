@@ -1,6 +1,7 @@
-import { useState } from 'react'
-import useListadoUsuarios from '../../hooks/useListadoUsuarios'
+import { useQueryUsers } from '../../hooks/users'
 import useSearch from '../../hooks/useSearch'
+import Alert from '../Alert'
+import DefaultTable from '../DefaultTable'
 import LoaderWhen from '../LoaderWhen'
 import ModalComponent from '../Modal'
 import PlusButton from '../PlusButton'
@@ -8,9 +9,12 @@ import AddUsuario from './AddUsuario'
 import EditUsuario from './EditUsuario'
 
 export default function TablaUsuarios() {
-  const { listadoUsuarios, isLoading } = useListadoUsuarios()
+  const { data: listadoUsuarios, isLoading, isError } = useQueryUsers()
   const { searchValue, handleChange, filterListado } = useSearch()
   const columns = ['ID', 'Nombre', 'Email', 'Perfil', 'Activo']
+  if (isError) {
+    return <Alert type="failed">Hubo un error inesperado</Alert>
+  }
   return (
     <>
       <LoaderWhen isTrue={isLoading}>
@@ -26,45 +30,25 @@ export default function TablaUsuarios() {
           value={searchValue}
           onChange={handleChange}
         />
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table className="w-full text-sm text-left text-gray-500 ">
-            <thead className="text-xs text-white uppercase bg-primary">
-              <tr>
-                {columns.map((column) => (
-                  <th key={column} scope="col" className="px-6 py-3">
-                    {column}
-                  </th>
-                ))}
-                <th scope="col" className="px-6 py-3">
-                  <span className="sr-only">Editar</span>
-                </th>
+        <DefaultTable columns={columns} extra={1}>
+          {listadoUsuarios &&
+            filterListado(listadoUsuarios.data).map((usuario) => (
+              <tr key={usuario.UsuarioId} className="bg-white border-b ">
+                <td className="td-default">{usuario.UsuarioId}</td>
+                <td className="td-default">{usuario.Nombre}</td>
+                <td className="td-default">{usuario.Email}</td>
+                <td className="td-default">{usuario.PerfilNombre}</td>
+                <td className="td-default">{usuario.Activo}</td>
+                <td className="text-right">
+                  <ModalComponent
+                    title="Editar Usuario"
+                    btn={<span className=" td-edited">Editar</span>}
+                    content={<EditUsuario user={usuario} />}
+                  />
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {listadoUsuarios &&
-                filterListado(listadoUsuarios).map((usuario) => (
-                  <tr key={usuario.UsuarioId} className="bg-white border-b ">
-                    <td className="px-6 py-4">{usuario.UsuarioId}</td>
-                    <td className="px-6 py-4">{usuario.Nombre}</td>
-                    <td className="px-6 py-4">{usuario.Email}</td>
-                    <td className="px-6 py-4">{usuario.PerfilNombre}</td>
-                    <td className="px-6 py-4">{usuario.Activo}</td>
-                    <td className="px-6 py-4 font-medium text-right cursor-pointer text-primary hover:underline">
-                      <ModalComponent
-                        title="Editar Usuario"
-                        btn={
-                          <span className="px-6 py-4 font-medium text-right cursor-pointer text-primary hover:underline">
-                            Editar
-                          </span>
-                        }
-                        content={<EditUsuario user={usuario} />}
-                      />
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+        </DefaultTable>
       </LoaderWhen>
     </>
   )

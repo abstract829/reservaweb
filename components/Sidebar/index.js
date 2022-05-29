@@ -22,6 +22,10 @@ const Sidebar = ({ collapsed }) => {
       name: 'Lista de salas',
       path: '/dashboard/lista-salas',
     },
+    {
+      name: 'Lista de feriados',
+      path: '/dashboard/lista-feriados',
+    },
   ]
   return (
     <ProSidebar collapsed={collapsed}>
