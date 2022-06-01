@@ -47,11 +47,28 @@ const EditSala = ({ id }) => {
     DisponibleOnLine: Yup.string().required('Seleccione una opción'),
   })
   const handleSubmit = (values) => {
-    const request = {
-      ...sala.data,
-      ...values,
+    let request
+    if (!sala.DisponibleOnLine && values.DisponibleOnLine === 'SI') {
+      request = {
+        ...sala.data,
+        DiasBloqueados: {
+          Lunes: 'NO',
+          Martes: 'NO',
+          Miercoles: 'NO',
+          Jueves: 'NO',
+          Viernes: 'NO',
+          Sabado: 'NO',
+          Domingo: 'NO',
+          Sala: 'NO',
+        },
+        ...values,
+      }
+    } else {
+      request = {
+        ...sala.data,
+        ...values,
+      }
     }
-    console.log(request)
     editSala(request)
   }
   return (

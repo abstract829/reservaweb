@@ -42,12 +42,6 @@ const AddTemporada = ({ sala }) => {
         ...sala.MisTemporadas,
         {
           ...values,
-          MisHorarios: [
-            {
-              Horario: '00:00',
-              Disponible: 'NO',
-            },
-          ],
         },
       ],
     }

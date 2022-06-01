@@ -1,11 +1,11 @@
-import { useDeleteSala, useQuerySalas } from '../../hooks/salas'
+import { useQuerySalas } from '../../hooks/salas'
 import useSearch from '../../hooks/useSearch'
 import Alert from '../Alert'
-import Alerts from '../Alerts'
 import DefaultTable from '../DefaultTable'
 import LoaderWhen from '../LoaderWhen'
 import ModalComponent from '../Modal'
 import PlusButton from '../PlusButton'
+import RenderIf from '../RenderIf'
 import AddSala from './AddSala'
 import DiasBloqueados from './DiasBloqueados'
 import EditSala from './EditSala'
@@ -13,7 +13,6 @@ import FechasBloqueadas from './FechasBloqueadas'
 import MisTemporadas from './MisTemporadas'
 export default function TablaSalas() {
   const { data: listadoSalas, isLoading, isError } = useQuerySalas()
-  const { mutate: deleteSala, isSuccess, isErrorMutating } = useDeleteSala()
   const { searchValue, handleChange, filterListado } = useSearch()
   const columns = [
     'ID',
@@ -27,8 +26,8 @@ export default function TablaSalas() {
   if (isError) {
     return <Alert type="failed">Hubo un error inesperado</Alert>
   }
-  const handleSubmit = (sala) => {
-    deleteSala({ SalaId: sala.SalaId })
+  const isOnline = (sala) => {
+    return sala.DisponibleOnLine === 'SI'
   }
   return (
     <>
@@ -53,27 +52,34 @@ export default function TablaSalas() {
                 <td className="td-default">{sala.Nombre}</td>
                 <td className="td-default">{sala.DisponibleOnLine}</td>
                 <td className="td-default">{sala.Activo}</td>
-                <td>
-                  <ModalComponent
-                    title={`Temporadas - Sala ${sala.Nombre}`}
-                    btn={<span className="td-edited">Ver</span>}
-                    content={<MisTemporadas id={sala.SalaId} />}
-                  />
-                </td>
-                <td>
-                  <ModalComponent
-                    title={`Fechas Bloqueadas - Sala ${sala.Nombre}`}
-                    btn={<span className="td-edited">Ver</span>}
-                    content={<FechasBloqueadas id={sala.SalaId} />}
-                  />
-                </td>
-                <td>
-                  <ModalComponent
-                    title={`Dias Bloqueados - Sala ${sala.Nombre}`}
-                    btn={<span className="td-edited">Ver</span>}
-                    content={<DiasBloqueados id={sala.SalaId} />}
-                  />
-                </td>
+                <RenderIf isTrue={isOnline(sala)}>
+                  <td>
+                    <ModalComponent
+                      title={`Temporadas - Sala ${sala.Nombre}`}
+                      btn={<span className="td-edited">Ver</span>}
+                      content={<MisTemporadas id={sala.SalaId} />}
+                    />
+                  </td>
+                  <td>
+                    <ModalComponent
+                      title={`Fechas Bloqueadas - Sala ${sala.Nombre}`}
+                      btn={<span className="td-edited">Ver</span>}
+                      content={<FechasBloqueadas id={sala.SalaId} />}
+                    />
+                  </td>
+                  <td>
+                    <ModalComponent
+                      title={`Dias Bloqueados - Sala ${sala.Nombre}`}
+                      btn={<span className="td-edited">Ver</span>}
+                      content={<DiasBloqueados id={sala.SalaId} />}
+                    />
+                  </td>
+                </RenderIf>
+                <RenderIf isTrue={!isOnline(sala)}>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </RenderIf>
                 <td className="text-right">
                   <ModalComponent
                     title="Editar Sala"
@@ -81,21 +87,9 @@ export default function TablaSalas() {
                     content={<EditSala id={sala.SalaId} />}
                   />
                 </td>
-                <td
-                  onClick={() => handleSubmit(sala)}
-                  className="text-right td-edited"
-                >
-                  Eliminar
-                </td>
               </tr>
             ))}
         </DefaultTable>
-        <Alerts
-          successIf={isSuccess}
-          failedIf={isErrorMutating}
-          succesText="Sala eliminada correctamente!"
-          failedText="Hubo un error inesperado"
-        />
       </LoaderWhen>
     </>
   )

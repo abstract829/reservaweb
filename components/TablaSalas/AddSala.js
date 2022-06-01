@@ -43,19 +43,6 @@ const AddSala = () => {
   const handleSubmit = (values) => {
     const request = {
       ...values,
-      MisTemporadas: [
-        {
-          FechaDesde: '2022-01-01T00:00:00',
-          FechaHasta: '2022-01-01T00:00:00',
-          Comentario: 'Crea una nueva temporada para eliminar esta',
-          MisHorarios: [
-            {
-              Horario: '00:00',
-              Disponible: 'NO',
-            },
-          ],
-        },
-      ],
       MisFechasBloqueadas: [],
       DiasBloqueados: {
         Lunes: 'NO',
