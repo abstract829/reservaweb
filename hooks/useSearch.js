@@ -1,11 +1,11 @@
 import { useState } from 'react'
 
-const useSearch = () => {
+const useSearch = (key) => {
   const [searchValue, setSearchValue] = useState('')
   const filterListado = (arr) => {
     let search = searchValue.trim().toLowerCase()
     if (search.length > 0) {
-      return arr.filter((u) => u.Nombre.toLowerCase().includes(search))
+      return arr.filter((u) => u[key].toLowerCase().includes(search))
     } else {
       return arr
     }

@@ -49,7 +49,7 @@ export const useMutateUsuarioEmpresa = () => {
 export const useQueryUsuariosEmpresa = ({ empresaId }) => {
   const { isAuthenticated } = useAuth()
   return useQuery(
-    [keyUsuarios],
+    [keyUsuarios, Number(empresaId)],
     () => fetchListarUsuariosEmpresa({ empresaId }),
     {
       enabled: isAuthenticated,

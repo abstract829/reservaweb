@@ -13,7 +13,7 @@ import FechasBloqueadas from './FechasBloqueadas'
 import MisTemporadas from './MisTemporadas'
 export default function TablaSalas() {
   const { data: listadoSalas, isLoading, isError } = useQuerySalas()
-  const { searchValue, handleChange, filterListado } = useSearch()
+  const { searchValue, handleChange, filterListado } = useSearch('Nombre')
   const columns = [
     'ID',
     'Nombre',

@@ -11,7 +11,7 @@ import Funciones from './Funciones'
 
 export default function TablaUsuarios() {
   const { data: listadoPerfiles, isLoading, isError } = useQueryPerfiles()
-  const { searchValue, handleChange, filterListado } = useSearch()
+  const { searchValue, handleChange, filterListado } = useSearch('Nombre')
   const columns = ['ID', 'Nombre', 'Activo', 'Funciones']
   if (isError) {
     return <Alert type="failed">Hubo un error inesperado</Alert>

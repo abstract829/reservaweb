@@ -41,6 +41,10 @@ const Sidebar = ({ collapsed }) => {
           name: 'Lista de empresas',
           path: '/dashboard/lista-empresas',
         },
+        {
+          name: 'Lista de usuarios',
+          path: '/dashboard/lista-usuariosempresa',
+        },
       ],
     },
   ]

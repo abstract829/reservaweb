@@ -10,7 +10,7 @@ import EditUsuario from './EditUsuario'
 
 export default function TablaUsuarios() {
   const { data: listadoUsuarios, isLoading, isError } = useQueryUsers()
-  const { searchValue, handleChange, filterListado } = useSearch()
+  const { searchValue, handleChange, filterListado } = useSearch('Nombre')
   const columns = ['ID', 'Nombre', 'Email', 'Perfil', 'Activo']
   if (isError) {
     return <Alert type="failed">Hubo un error inesperado</Alert>
