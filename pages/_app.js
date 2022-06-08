@@ -1,5 +1,7 @@
 import '../styles/globals.css'
 import 'devextreme/dist/css/dx.light.css'
+import '@fullcalendar/common/main.css'
+import '@fullcalendar/daygrid/main.css'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 

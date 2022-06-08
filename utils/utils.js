@@ -27,6 +27,54 @@ export const dateParse = (value) => {
     month < 10 ? '0' + month : month
   }/${year}`
 }
+export const parseMonthNumberToName = (num) => {
+  switch (num) {
+    case 1:
+      return 'Enero'
+    case 2:
+      return 'Febrero'
+    case 3:
+      return 'Marzo'
+    case 4:
+      return 'Abril'
+    case 5:
+      return 'Mayo'
+    case 6:
+      return 'Junio'
+    case 7:
+      return 'Julio'
+    case 8:
+      return 'Ago.'
+    case 9:
+      return 'Sept.'
+    case 10:
+      return 'Oct.'
+    case 11:
+      return 'Nov.'
+    case 12:
+      return 'Dic.'
+    default:
+      break
+  }
+}
+export const parseDayNumberToName = (num) => {
+  switch (num) {
+    case 1:
+      return 'Lunes'
+    case 2:
+      return 'Martes'
+    case 3:
+      return 'Miercoles'
+    case 4:
+      return 'Jueves'
+    case 5:
+      return 'Viernes'
+    case 6:
+      return 'Sabado'
+    case 0:
+      return 'Domingo'
+  }
+}
 export function checkRut(rut) {
   // Despejar Puntos
   var valor = rut.replace('.', '')

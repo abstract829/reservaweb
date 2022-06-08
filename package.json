@@ -11,12 +11,14 @@
     "devextreme-react": "21.2.7",
     "formik": "^2.2.9",
     "next": "latest",
+    "next-transpile-modules": "^9.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-modal": "^3.15.1",
     "react-pro-sidebar": "^0.7.1",
     "react-query": "^3.39.0",
+    "react-use-wizard": "^2.2.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {

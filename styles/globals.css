@@ -7,8 +7,14 @@
 .input{
   @apply mb-2 rounded border-2 border-[#908161] p-2
 }
+.color-primary{
+  color: #908161
+}
 .bg-primary{
   @apply bg-[#908161]
+}
+.border-primary{
+  @apply border-[#908161]
 }
 .text-primary{
   @apply text-[#908161]
