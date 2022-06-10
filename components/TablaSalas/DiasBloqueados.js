@@ -116,6 +116,7 @@ const DiasBloqueados = ({ id }) => {
           validationSchema={validationSchema}
           submitFunction={handleSubmit}
           btnText="Guardar"
+          scroll={true}
         />
         <Alerts
           successIf={isSuccess}

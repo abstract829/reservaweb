@@ -3,12 +3,15 @@ import FormikForm from '../FormikForm'
 import Alerts from '../Alerts'
 import { useMutateUsuarioEmpresa } from '../../hooks/empresas'
 import { checkRut } from '../../utils/utils'
+import FormikModal from '../FormikForm/FormikModal'
+import PlusButton from '../PlusButton'
 const AddUsuarioEmpresa = ({ EmpresaId }) => {
   const {
     mutate: addUser,
     isError: isErrorMutating,
     isSuccess,
   } = useMutateUsuarioEmpresa()
+
   const inputForms = [
     {
       label: 'Nombre',
@@ -100,6 +103,16 @@ const AddUsuarioEmpresa = ({ EmpresaId }) => {
   }
   return (
     <>
+      {/* <FormikModal
+        initialValues={initialValues}
+        inputForms={inputForms}
+        validationSchema={validationSchema}
+        submitFunction={handleSubmit}
+        modalTitle="Agregar Usuario Empresa"
+        openModalButtonText={<PlusButton />}
+        saveButtonText="Guardar"
+        scroll={true}
+      /> */}
       <div className="w-96">
         <FormikForm
           inputForms={inputForms}
@@ -107,6 +120,7 @@ const AddUsuarioEmpresa = ({ EmpresaId }) => {
           validationSchema={validationSchema}
           submitFunction={handleSubmit}
           btnText="Guardar"
+          scroll={true}
         />
       </div>
       <Alerts

@@ -9,7 +9,7 @@ const Funciones = ({ id }) => {
   }
   return (
     <LoaderWhen isTrue={isLoading}>
-      <div className="max-w-3xl overflow-y-auto max-h-96">
+      <div className="max-w-3xl">
         <DisplayFunciones
           funciones={funciones && funciones.data}
           perfilId={id}

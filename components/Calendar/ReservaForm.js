@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import * as Yup from 'yup'
 import { useMutateReserva } from '../../hooks/reservas'
 import useReserva from '../../hooks/useReserva'
@@ -6,11 +5,14 @@ import { checkRut } from '../../utils/utils'
 import Alerts from '../Alerts'
 import FormikReserva from '../FormikForm/FormikReserva'
 
-const ReservaForm = () => {
-  const { setDatosAsistentePrincipal, hasAsistentes, reservaRequest } =
-    useReserva()
+const ReservaForm = ({ precio = '' }) => {
+  const {
+    setDatosAsistentePrincipal,
+    hasAsistentes,
+    reservaRequest,
+    validLimitAsistentes,
+  } = useReserva()
   const { mutate: realizarReserva, isError, isSuccess } = useMutateReserva()
-  const [success, setSuccess] = useState(false)
   const inputForms = [
     {
       label: 'RUT',
@@ -103,13 +105,16 @@ const ReservaForm = () => {
     const [isValidRut, Rut] = checkRut(values.NumeroDocumento)
     if (isValidRut) {
       if (hasAsistentes()) {
-        const usuario = {
-          ...values,
-          NumeroDocumento: Rut,
+        if (validLimitAsistentes()) {
+          const usuario = {
+            ...values,
+            NumeroDocumento: Rut,
+          }
+          setDatosAsistentePrincipal(usuario)
+          realizarReserva(reservaRequest)
+        } else {
+          throw new Error('Solo puede haber un maximo de 10 asistentes')
         }
-        setDatosAsistentePrincipal(usuario)
-        console.log(reservaRequest)
-        realizarReserva(reservaRequest)
       } else {
         throw new Error('Debe ingresar los asistentes')
       }
@@ -120,6 +125,9 @@ const ReservaForm = () => {
   return (
     <>
       <div>
+        <p className="mb-4 text-xl font-semibold text-center text-primary font-uppercase">
+          Total a pagar: {precio} - Limite de personas: 11
+        </p>
         <FormikReserva
           inputForms={inputForms}
           initialValues={initialValues}

@@ -4,6 +4,9 @@
 .font-primary{
   font-family: 'Cormorant Garamond', serif;
 }
+.font-helvetica{
+  font-family: Helvetica, sans-serif;
+}
 .button{
   @apply px-4 py-2 text-white bg-[#908161]
 }

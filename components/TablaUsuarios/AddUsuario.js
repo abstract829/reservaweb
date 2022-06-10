@@ -62,7 +62,9 @@ const AddUsuario = () => {
     Email: '',
     Password: '',
     Activo: 'SI',
-    PerfilId: listadoPerfilesActivos.data[0].PerfilId.toString(),
+    PerfilId:
+      listadoPerfilesActivos &&
+      listadoPerfilesActivos.data[0].PerfilId.toString(),
   }
   const validationSchema = Yup.object().shape({
     Email: Yup.string()

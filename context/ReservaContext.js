@@ -13,8 +13,10 @@ export const ReservaProvider = ({ children }) => {
     console.log(reservaRequest)
   }, [reservaRequest])
   const hasAsistentes = () => {
-    console.log(reservaRequest.Asistentes.length > 0)
     return reservaRequest.Asistentes.length > 0
+  }
+  const validLimitAsistentes = () => {
+    return reservaRequest.Asistentes.length < 11
   }
   const resetReserva = () => {
     setReservaRequest(INITIAL_STATE)
@@ -54,6 +56,7 @@ export const ReservaProvider = ({ children }) => {
         setAsistente,
         resetReserva,
         hasAsistentes,
+        validLimitAsistentes,
       }}
     >
       {children}

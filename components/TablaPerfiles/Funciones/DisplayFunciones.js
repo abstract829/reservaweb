@@ -40,41 +40,43 @@ const DisplayFunciones = ({ funciones, perfilId }) => {
   }
   return (
     <LoaderWhen isTrue={isLoading}>
-      {funciones &&
-        funciones.map((modulo) => (
-          <div key={modulo.id}>
-            <h2 className="text-center text-white bg-primary">
-              {modulo.nombre}
-            </h2>
-            <div className="flex flex-wrap gap-4">
-              {modulo.mis_submodulos.map((subModulo) => (
-                <div className="flex flex-wrap gap-4" key={subModulo.id}>
-                  <div>
-                    <h3 className="px-2 py-1 my-4 text-white bg-primary">
-                      {subModulo.nombre}
-                    </h3>
-                    {subModulo.mis_funciones.map((funcion) => (
-                      <div
-                        className="flex items-center gap-1 my-2 "
-                        key={funcion.id}
-                      >
-                        <input
-                          type="checkbox"
-                          defaultChecked={hasFunction(funcion.id)}
-                          name={funcion.id}
-                          onChange={(e) => handleChange(e, funcion)}
-                        />
-                        <label className="font-bold text-primary">
-                          {funcion.nombre}
-                        </label>
-                      </div>
-                    ))}
+      <div className="overflow-y-auto max-h-96">
+        {funciones &&
+          funciones.map((modulo) => (
+            <div key={modulo.id}>
+              <h2 className="text-center text-white bg-primary">
+                {modulo.nombre}
+              </h2>
+              <div className="flex flex-wrap gap-4">
+                {modulo.mis_submodulos.map((subModulo) => (
+                  <div className="flex flex-wrap gap-4" key={subModulo.id}>
+                    <div>
+                      <h3 className="px-2 py-1 my-4 text-white bg-primary">
+                        {subModulo.nombre}
+                      </h3>
+                      {subModulo.mis_funciones.map((funcion) => (
+                        <div
+                          className="flex items-center gap-1 my-2 "
+                          key={funcion.id}
+                        >
+                          <input
+                            type="checkbox"
+                            defaultChecked={hasFunction(funcion.id)}
+                            name={funcion.id}
+                            onChange={(e) => handleChange(e, funcion)}
+                          />
+                          <label className="font-bold text-primary">
+                            {funcion.nombre}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+      </div>
       <button
         onClick={handleSubmit}
         className="w-full mt-8 font-bold uppercase button"

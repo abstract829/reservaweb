@@ -6,10 +6,13 @@ import {
 } from '../../hooks/empresas'
 import useSearch from '../../hooks/useSearch'
 import { fetchListarUsuariosEmpresa } from '../../services/empresas'
+import { checkRut } from '../../utils/utils'
 import Alerts from '../Alerts'
 import DefaultTable from '../DefaultTable'
+import FormikModal from '../FormikForm/FormikModal'
 import LoaderWhen from '../LoaderWhen'
 import ModalComponent from '../Modal'
+import ModalRenderProps from '../ModalRenderProps'
 import PlusButton from '../PlusButton'
 import AddUsuarioEmpresa from './AddUsuarioEmpresa'
 import EditUsuarioEmpresa from './EditUsuarioEmpresa'
@@ -20,17 +23,6 @@ const Table = ({ empresaId }) => {
     isError,
     isLoading,
   } = useQueryUsuariosEmpresa({ empresaId })
-  // const [listaUsuarios, setListaUsuarios] = useState(null)
-  // const [isLoading, setIsLoading] = useState(false)
-  // useEffect(() => {
-  //   setIsLoading(true)
-  //   const fetch = async () => {
-  //     const res = await fetchListarUsuariosEmpresa({ empresaId })
-  //     setListaUsuarios(res.data)
-  //     setIsLoading(false)
-  //   }
-  //   fetch()
-  // }, [empresaId])
   const {
     mutate: deleteUsuario,
     isErrorMutating,

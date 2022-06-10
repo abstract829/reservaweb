@@ -98,6 +98,7 @@ const AddAsistente = ({ setAsistentes }) => {
           validationSchema={validationSchema}
           submitFunction={handleSubmit}
           btnText="Guardar"
+          scroll={true}
         />
         <Alerts
           successIf={success}

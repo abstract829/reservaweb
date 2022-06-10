@@ -91,6 +91,7 @@ const EditUsuarioEmpresa = ({ usuario }) => {
           validationSchema={validationSchema}
           submitFunction={handleSubmit}
           btnText="Guardar"
+          scroll={true}
         />
       </div>
       <Alerts
