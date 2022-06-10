@@ -5,8 +5,12 @@ import Alert from '../Alert'
 import LoaderWhen from '../LoaderWhen'
 import { parseDayNumberToName, parseMonthNumberToName } from '../../utils/utils'
 import RenderIf from '../RenderIf'
+import ModalComponent from '../Modal'
+import ReservaForm from './ReservaForm'
+import useReserva from '../../hooks/useReserva'
 
 const Month = () => {
+  const { setDatosFecha, resetReserva } = useReserva()
   const [month, setMonth] = useState(new Date().getMonth() + 1)
   const [year, setYear] = useState(new Date().getFullYear())
   const { data, isError, isLoading } = useQueryCalendario({
@@ -42,6 +46,18 @@ const Month = () => {
     day = parseDayNumberToName(day)
     return `${day} ${num < 10 ? '0' + num : num}`
   }
+  const setFechas = (reserva) => {
+    setDatosFecha({
+      Horario: reserva.Horario,
+      Fecha: reserva.Fecha,
+      Idioma: 'Español',
+    })
+  }
+  const getTitle = (reserva) => {
+    return `Reserva ${parseFechaToDayDisplay(
+      reserva.Fecha
+    )} de ${parseMonthNumberToName(month)} de ${year} a las ${reserva.Horario}`
+  }
   return (
     <LoaderWhen isTrue={isLoading}>
       <div className="flex gap-8 mb-8 text-white">
@@ -71,7 +87,7 @@ const Month = () => {
         </div>
       </div>
       <RenderIf isTrue={data && data.data.length > 0}>
-        <div className="grid w-full grid-cols-4 gap-2">
+        <div className="grid w-full gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {data &&
             data.data.map((reserva) => (
               <div
@@ -83,10 +99,22 @@ const Month = () => {
                     {parseFechaToDayDisplay(reserva.Fecha)}
                   </p>
                   <div className="mb-4">
-                    <p className="text-xl font-medium text-center">Horarios:</p>
-                    <ul className="flex flex-col items-center gap-2 mt-4 text-xl font-medium">
-                      <li className="px-4 py-2 text-white shadow cursor-pointer bg-primary rounded-3xl">
-                        {reserva.Horario}
+                    <p className="text-xl font-semibold text-center">
+                      Horarios:
+                    </p>
+                    <ul className="flex flex-col items-center gap-2 mt-4 text-xl ">
+                      <li>
+                        <ModalComponent
+                          title={getTitle(reserva)}
+                          onOpen={() => setFechas(reserva)}
+                          onClose={resetReserva}
+                          btn={
+                            <li className="px-4 py-2 font-semibold text-white shadow cursor-pointer bg-primary rounded-3xl">
+                              {reserva.Horario}
+                            </li>
+                          }
+                          content={<ReservaForm />}
+                        />
                       </li>
                     </ul>
                   </div>
@@ -97,7 +125,7 @@ const Month = () => {
       </RenderIf>
       <RenderIf isTrue={data && data.data.length === 0}>
         <p className="h-screen text-white">
-          Este mes no tiene horarios disponibles
+          Esta fecha no tiene horarios disponibles
         </p>
       </RenderIf>
     </LoaderWhen>

@@ -1,17 +1,16 @@
+import { useState } from 'react'
 import * as Yup from 'yup'
-import FormikForm from '../FormikForm'
-import Alerts from '../Alerts'
-import { useMutateUsuarioEmpresa } from '../../hooks/empresas'
+import useReserva from '../../hooks/useReserva'
 import { checkRut } from '../../utils/utils'
-const EditUsuarioEmpresa = ({ usuario }) => {
-  const {
-    mutate: editUser,
-    isError: isErrorMutating,
-    isSuccess,
-  } = useMutateUsuarioEmpresa()
+import Alerts from '../Alerts'
+import FormikForm from '../FormikForm'
+
+const AddAsistente = ({ setAsistentes }) => {
+  const { setAsistente } = useReserva()
+  const [success, setSuccess] = useState(false)
   const inputForms = [
     {
-      label: 'Nombre',
+      label: 'Nombre Completo',
       type: 'text',
       name: 'NombreCompleto',
       placeholder: 'Nombre Apellido',
@@ -23,22 +22,19 @@ const EditUsuarioEmpresa = ({ usuario }) => {
       placeholder: 'example@email.com',
     },
     {
-      label: 'Ciudad',
-      type: 'text',
-      name: 'Ciudad',
-      placeholder: 'Ciudad',
-    },
-    {
-      label: 'Rut',
+      label: 'RUT',
       type: 'text',
       name: 'NumeroDocumento',
-      placeholder: '11.111.111-1',
     },
     {
       label: 'Telefono',
       type: 'text',
       name: 'Telefono',
-      placeholder: '912345678',
+    },
+    {
+      label: 'Fecha de nacimiento',
+      type: 'date',
+      name: 'FechaNacimiento',
     },
     {
       label: 'Genero',
@@ -49,35 +45,46 @@ const EditUsuarioEmpresa = ({ usuario }) => {
         { value: 'FEMENINO', text: 'Mujer' },
       ],
     },
+    {
+      label: 'Pais',
+      type: 'select',
+      name: 'PaisId',
+      options: [{ value: '1', text: 'Chile' }],
+    },
+    {
+      label: 'Ciudad',
+      type: 'text',
+      name: 'Ciudad',
+    },
   ]
   const initialValues = {
-    NombreCompleto: usuario.NombreCompleto,
-    CorreoElectronico: usuario.CorreoElectronico,
-    Ciudad: usuario.Ciudad,
-    NumeroDocumento: usuario.NumeroDocumento,
-    Telefono: usuario.Telefono,
-    Genero: usuario.Genero,
+    NombreCompleto: '',
+    CorreoElectronico: '',
+    NumeroDocumento: '',
+    Telefono: '',
+    FechaNacimiento: '',
+    Genero: 'MASCULINO',
+    PaisId: '1',
+    Ciudad: '',
   }
   const validationSchema = Yup.object().shape({
     CorreoElectronico: Yup.string()
       .email('Debe ingresar un email valido')
       .max(255)
-      .required('Debe ingresar un email'),
-    NombreCompleto: Yup.string().max(255).required('Debe ingresar un nombre'),
-    Ciudad: Yup.string().required('El campo es obligatorio'),
+      .required('El campo es obligatorio'),
+    NombreCompleto: Yup.string().required('El campo es obligatorio'),
+    FechaNacimiento: Yup.string().required('El campo es obligatorio'),
     NumeroDocumento: Yup.string().required('El campo es obligatorio'),
     Telefono: Yup.string().required('El campo es obligatorio'),
     Genero: Yup.string().required('El campo es obligatorio'),
+    PaisId: Yup.string().required('El campo es obligatorio'),
+    Ciudad: Yup.string().required('El campo es obligatorio'),
   })
   const handleSubmit = (values) => {
     const [isValidRut, Rut] = checkRut(values.NumeroDocumento)
     if (isValidRut) {
-      const usuario = {
-        ...usuario,
-        ...values,
-        NumeroDocumento: Rut,
-      }
-      editUser(usuario)
+      setAsistente(values)
+      setSuccess(true)
     } else {
       throw new Error('RUT Invalido')
     }
@@ -92,14 +99,14 @@ const EditUsuarioEmpresa = ({ usuario }) => {
           submitFunction={handleSubmit}
           btnText="Guardar"
         />
+        <Alerts
+          successIf={success}
+          failedIf={false}
+          succesText="Asistente agregado correctamente!"
+          failedText="Hubo un error inesperado"
+        />
       </div>
-      <Alerts
-        successIf={isSuccess}
-        failedIf={isErrorMutating}
-        succesText="Usuario editado correctamente!"
-        failedText="Hubo un error inesperado"
-      />
     </>
   )
 }
-export default EditUsuarioEmpresa
+export default AddAsistente

@@ -2,6 +2,7 @@ import * as Yup from 'yup'
 import FormikForm from '../FormikForm'
 import Alerts from '../Alerts'
 import { useMutateUsuarioEmpresa } from '../../hooks/empresas'
+import { checkRut } from '../../utils/utils'
 const AddUsuarioEmpresa = ({ EmpresaId }) => {
   const {
     mutate: addUser,
@@ -84,13 +85,18 @@ const AddUsuarioEmpresa = ({ EmpresaId }) => {
     Genero: Yup.string().required('El campo es obligatorio'),
   })
   const handleSubmit = (values) => {
-    const usuario = {
-      PersonaId: 0,
-      EmpresaId,
-      PaisId: 1,
-      ...values,
+    const [isValidRut, Rut] = checkRut(values.NumeroDocumento)
+    if (isValidRut) {
+      const usuario = {
+        ...values,
+        PersonaId: 0,
+        EmpresaId,
+        NumeroDocumento: Rut,
+      }
+      addUser(usuario)
+    } else {
+      throw new Error('RUT Invalido')
     }
-    addUser(usuario)
   }
   return (
     <>

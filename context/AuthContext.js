@@ -4,11 +4,6 @@ import { fetchAutenticarUsuario, fetchRefreshToken } from '../services/user'
 import { getSession, setSession } from '../utils/utils'
 export const AuthContext = createContext(null)
 
-const initialState = {
-  isAuthenticated: false,
-  isInitialized: false,
-  user: null,
-}
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
