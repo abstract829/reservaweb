@@ -32,11 +32,11 @@ export default function TablaSalas() {
   return (
     <>
       <LoaderWhen isTrue={isLoading}>
-        <ModalComponent
+        {/* <ModalComponent
           title="Crear Sala"
           btn={<PlusButton />}
           content={<AddSala />}
-        />
+        /> */}
         <input
           className="input"
           placeholder="Busca una sala..."

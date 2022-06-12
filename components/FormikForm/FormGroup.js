@@ -23,7 +23,7 @@ const FormGroup = ({ name, label, type, placeholder, options }) => {
           type={type}
           name={name}
           placeholder={placeholder}
-          className={type === 'textarea' ? 'input h-16 w-96 ' : 'input'}
+          className={type === 'textarea' ? 'input h-16 w-96' : 'input'}
         />
       </RenderIf>
 

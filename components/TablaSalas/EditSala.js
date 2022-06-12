@@ -17,15 +17,15 @@ const EditSala = ({ id }) => {
       name: 'Nombre',
       placeholder: 'Nombre',
     },
-    {
-      label: 'Disponible Online',
-      type: 'select',
-      name: 'DisponibleOnLine',
-      options: [
-        { value: 'SI', text: 'SI' },
-        { value: 'NO', text: 'NO' },
-      ],
-    },
+    // {
+    //   label: 'Disponible Online',
+    //   type: 'select',
+    //   name: 'DisponibleOnLine',
+    //   options: [
+    //     { value: 'SI', text: 'SI' },
+    //     { value: 'NO', text: 'NO' },
+    //   ],
+    // },
     {
       label: 'Activo',
       type: 'select',
@@ -38,36 +38,40 @@ const EditSala = ({ id }) => {
   ]
   const initialValues = {
     Nombre: sala && sala.data.Nombre,
-    DisponibleOnLine: sala && sala.data.DisponibleOnLine,
+    // DisponibleOnLine: sala && sala.data.DisponibleOnLine,
     Activo: sala && sala.data.Activo,
   }
   const validationSchema = Yup.object().shape({
     Nombre: Yup.string().max(255).required('Debe ingresar un nombre'),
     Activo: Yup.string().required('Seleccione una opción'),
-    DisponibleOnLine: Yup.string().required('Seleccione una opción'),
+    // DisponibleOnLine: Yup.string().required('Seleccione una opción'),
   })
   const handleSubmit = (values) => {
     let request
-    if (!sala.DisponibleOnLine && values.DisponibleOnLine === 'SI') {
-      request = {
-        ...sala.data,
-        DiasBloqueados: {
-          Lunes: 'NO',
-          Martes: 'NO',
-          Miercoles: 'NO',
-          Jueves: 'NO',
-          Viernes: 'NO',
-          Sabado: 'NO',
-          Domingo: 'NO',
-          Sala: 'NO',
-        },
-        ...values,
-      }
-    } else {
-      request = {
-        ...sala.data,
-        ...values,
-      }
+    // if (!sala.DisponibleOnLine && values.DisponibleOnLine === 'SI') {
+    //   request = {
+    //     ...sala.data,
+    //     DiasBloqueados: {
+    //       Lunes: 'NO',
+    //       Martes: 'NO',
+    //       Miercoles: 'NO',
+    //       Jueves: 'NO',
+    //       Viernes: 'NO',
+    //       Sabado: 'NO',
+    //       Domingo: 'NO',
+    //       Sala: 'NO',
+    //     },
+    //     ...values,
+    //   }
+    // } else {
+    //   request = {
+    //     ...sala.data,
+    //     ...values,
+    //   }
+    // }
+    request = {
+      ...sala.data,
+      ...values,
     }
     editSala(request)
   }

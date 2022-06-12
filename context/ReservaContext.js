@@ -4,6 +4,8 @@ const INITIAL_STATE = {
   AsistentePrincipal: {},
   Fecha: '',
   Horario: '',
+  ComoSeEntero: '',
+  RequerimientosEspeciales: '',
   Idioma: 'Español',
   Asistentes: [],
 }
@@ -31,11 +33,13 @@ export const ReservaProvider = ({ children }) => {
       }
     })
   }
-  const setDatosAsistentePrincipal = (asistente) => {
+  const setDatosAsistentePrincipal = (values) => {
     setReservaRequest((prev) => {
       return {
         ...prev,
-        AsistentePrincipal: asistente,
+        AsistentePrincipal: values,
+        ComoSeEntero: values.ComoSeEntero,
+        RequerimientosEspeciales: values.RequerimientosEspeciales,
       }
     })
   }

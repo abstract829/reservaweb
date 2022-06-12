@@ -1,8 +1,9 @@
-import { Formik, Form } from 'formik'
+import { Formik, Form, Field } from 'formik'
 import FormGroup from './FormGroup'
 import RenderIf from '../RenderIf'
 import LoadIndicatorIf from '../LoadIndicatorIf'
 import AsistentesTable from '../Calendar/AsistentesTable'
+import { useState } from 'react'
 
 const FormikReserva = ({
   inputForms,
@@ -11,12 +12,27 @@ const FormikReserva = ({
   submitFunction,
   btnText,
 }) => {
+  const [isOtro, setIsOtro] = useState(false)
+  const [otroValue, setOtroValue] = useState('')
+  const radioOpts = [
+    'Pagina web',
+    'Prensa',
+    'Recomendación',
+    'Tour operador',
+    'Redes sociales',
+  ]
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
+          if (values.ComoSeEntero === 'Otro') {
+            values = {
+              ...values,
+              ComoSeEntero: otroValue,
+            }
+          }
           await submitFunction(values)
         } catch (error) {
           const message = error.message || 'Hubo un error inesperado'
@@ -46,6 +62,47 @@ const FormikReserva = ({
                   options={input.options ? input.options : null}
                 />
               ))}
+              <div>
+                <p className="mb-2 font-bold text-[#908161]">
+                  ¿Como se informó de este tour?
+                </p>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                  {radioOpts.map((opt) => (
+                    <label className="flex items-center" key={opt}>
+                      <Field
+                        type="radio"
+                        name="ComoSeEntero"
+                        value={opt}
+                        onClick={() => setIsOtro(false)}
+                      />
+                      {opt}
+                    </label>
+                  ))}
+                  <label className="flex items-center col-span-2">
+                    <Field
+                      type="radio"
+                      name="ComoSeEntero"
+                      value="Otro"
+                      onClick={() => setIsOtro(true)}
+                    />
+                    Otro
+                    <input
+                      type="text"
+                      value={otroValue}
+                      onChange={(e) => setOtroValue(e.target.value)}
+                      disabled={!isOtro}
+                      className="ml-2 rounded border-2 border-[#908161] px-2"
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-4 mt-4">
+              <FormGroup
+                label="Requerimientos especiales"
+                type="textarea"
+                name="RequerimientosEspeciales"
+              />
             </div>
             <p className="mb-4 text-xl font-semibold text-center text-primary font-uppercase">
               Asistentes al tour:

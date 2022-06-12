@@ -59,22 +59,9 @@ const ReservaForm = ({ precio = '' }) => {
       options: [{ value: '1', text: 'Chile' }],
     },
     {
-      label: 'Cómo se informo de este tour?',
-      type: 'select',
-      name: 'Informe',
-      options: [
-        { value: 'PaginaWeb', text: 'Pagina web' },
-        { value: 'Prensa', text: 'Prensa' },
-        { value: 'Recomendación', text: 'Recomendación' },
-        { value: 'TourOperador', text: 'Tour operador' },
-        { value: 'RedesSociales', text: 'Redes sociales' },
-        { value: 'Otro', text: 'Otro' },
-      ],
-    },
-    {
-      label: 'Requerimientos especiales',
-      type: 'textarea',
-      name: 'Notas',
+      label: 'Ciudad',
+      type: 'text',
+      name: 'Ciudad',
       placeholder: '',
     },
   ]
@@ -85,8 +72,10 @@ const ReservaForm = ({ precio = '' }) => {
     FechaNacimiento: '',
     Genero: 'MASCULINO',
     Telefono: '',
-    Notas: '',
+    RequerimientosEspeciales: '',
     PaisId: '1',
+    ComoSeEntero: '',
+    Ciudad: '',
   }
   const validationSchema = Yup.object().shape({
     CorreoElectronico: Yup.string()
@@ -98,19 +87,21 @@ const ReservaForm = ({ precio = '' }) => {
     Telefono: Yup.string().required('El campo es obligatorio'),
     Genero: Yup.string().required('El campo es obligatorio'),
     NumeroDocumento: Yup.string().required('El campo es obligatorio'),
-    Notas: Yup.string().required('El campo es obligatorio'),
+    RequerimientosEspeciales: Yup.string().required('El campo es obligatorio'),
     PaisId: Yup.string().required('El campo es obligatorio'),
+    ComoSeEntero: Yup.string().required('El campo es obligatorio'),
+    Ciudad: Yup.string().required('El campo es obligatorio'),
   })
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     const [isValidRut, Rut] = checkRut(values.NumeroDocumento)
+    const usuario = {
+      ...values,
+      NumeroDocumento: Rut,
+    }
+    setDatosAsistentePrincipal(usuario)
     if (isValidRut) {
       if (hasAsistentes()) {
         if (validLimitAsistentes()) {
-          const usuario = {
-            ...values,
-            NumeroDocumento: Rut,
-          }
-          setDatosAsistentePrincipal(usuario)
           realizarReserva(reservaRequest)
         } else {
           throw new Error('Solo puede haber un maximo de 10 asistentes')

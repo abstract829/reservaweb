@@ -46,12 +46,6 @@ const Month = () => {
       )
     }
   }, [month, year, data])
-  useEffect(() => {
-    console.log({ calendario })
-  }, [calendario])
-  useEffect(() => {
-    console.log({ data })
-  }, [data])
   const increaseYear = () => {
     setYear((prev) => prev + 1)
   }
