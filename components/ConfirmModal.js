@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import Modal from 'react-modal'
 
 const customStyles = {
@@ -13,19 +14,15 @@ const customStyles = {
 }
 Modal.setAppElement('#modal-root')
 
-export default function ModalRenderProps({
+export default function ConfirmModal({
+  content,
   btn = 'Open Modal',
   title = 'Modal title',
   onOpen = () => null,
   onClose = () => null,
-  saveText = 'Guardar',
-  children,
+  onSubmit = () => null,
 }) {
   const [modalIsOpen, setIsOpen] = React.useState(false)
-  const onSubmit = (fnc) => {
-    console.log(fnc)
-    fnc()
-  }
   function openModal() {
     onOpen()
     setIsOpen(true)
@@ -34,7 +31,6 @@ export default function ModalRenderProps({
     onClose()
     setIsOpen(false)
   }
-
   return (
     <div>
       <button onClick={openModal}>{btn}</button>
@@ -43,13 +39,13 @@ export default function ModalRenderProps({
           {title}
         </h3>
         <div className="px-4 py-2">
-          {children(onSubmit)}
+          <div className="text-2xl text-center">
+            <p>Esta acción no se puede deshacer</p>
+            <p>¿Desea continuar?</p>
+          </div>
           <div className="flex justify-between mt-8">
-            <button
-              className="px-4 py-2 text-white bg-primary"
-              onClick={onSubmit}
-            >
-              {saveText}
+            <button className="button" onClick={onSubmit}>
+              Confirmar
             </button>
             <button
               className="px-4 py-2 text-white bg-slate-600"

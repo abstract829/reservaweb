@@ -2,6 +2,7 @@ import { useDeleteFeriado, useQueryFeriados } from '../../hooks/feriados'
 import { dateParse } from '../../utils/utils'
 import Alert from '../Alert'
 import Alerts from '../Alerts'
+import ConfirmModal from '../ConfirmModal'
 import DefaultTable from '../DefaultTable'
 import LoaderWhen from '../LoaderWhen'
 import ModalComponent from '../Modal'
@@ -34,11 +35,12 @@ const TablaFeriados = () => {
           feriados.data.map((feriado) => (
             <tr key={feriado.FeriadoId}>
               <td className="td-default">{dateParse(feriado.Fecha)}</td>
-              <td
-                className="text-right td-edited"
-                onClick={() => handleSubmit(feriado)}
-              >
-                Eliminar
+              <td className="text-right">
+                <ConfirmModal
+                  onSubmit={() => handleSubmit(feriado)}
+                  title={`Eliminar ${dateParse(feriado.Fecha)}`}
+                  btn={<span className="td-edited">Eliminar</span>}
+                />
               </td>
             </tr>
           ))}

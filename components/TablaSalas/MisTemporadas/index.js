@@ -2,6 +2,7 @@ import { useMutateSala, useQuerySalaById } from '../../../hooks/salas'
 import { dateParse } from '../../../utils/utils'
 import Alert from '../../Alert'
 import Alerts from '../../Alerts'
+import ConfirmModal from '../../ConfirmModal'
 import DefaultTable from '../../DefaultTable'
 import LoaderWhen from '../../LoaderWhen'
 import ModalComponent from '../../Modal'
@@ -50,11 +51,12 @@ const MisTemporadas = ({ id }) => {
                   }
                 />
               </td>
-              <td
-                onClick={() => handleSubmit(temporada)}
-                className="text-right td-edited"
-              >
-                Eliminar
+              <td className="text-right">
+                <ConfirmModal
+                  onSubmit={() => handleSubmit(temporada)}
+                  title={`Eliminar Temporada`}
+                  btn={<span className="td-edited">Eliminar</span>}
+                />
               </td>
             </tr>
           ))}

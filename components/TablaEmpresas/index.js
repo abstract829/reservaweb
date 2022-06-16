@@ -2,6 +2,7 @@ import { useDeleteEmpresa, useQueryEmpresas } from '../../hooks/empresas'
 import useSearch from '../../hooks/useSearch'
 import Alert from '../Alert'
 import Alerts from '../Alerts'
+import ConfirmModal from '../ConfirmModal'
 import DefaultTable from '../DefaultTable'
 import LoaderWhen from '../LoaderWhen'
 import ModalComponent from '../Modal'
@@ -55,11 +56,12 @@ export default function TablaEmpresas() {
                     content={<EditEmpresa empresa={empresa} />}
                   />
                 </td>
-                <td
-                  className="td-edited"
-                  onClick={() => handleSubmit(empresa.EmpresaId)}
-                >
-                  Eliminar
+                <td>
+                  <ConfirmModal
+                    onSubmit={() => handleSubmit(empresa.EmpresaId)}
+                    title={`Eliminar ${empresa.Nombre}`}
+                    btn={<span className="td-edited">Eliminar</span>}
+                  />
                 </td>
               </tr>
             ))}

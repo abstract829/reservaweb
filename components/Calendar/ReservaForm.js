@@ -1,11 +1,13 @@
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import * as Yup from 'yup'
 import { useMutateReserva } from '../../hooks/reservas'
 import useReserva from '../../hooks/useReserva'
-import { checkRut } from '../../utils/utils'
 import Alerts from '../Alerts'
 import FormikReserva from '../FormikForm/FormikReserva'
 
 const ReservaForm = ({ precio = '' }) => {
+  const router = useRouter()
   const {
     setDatosAsistentePrincipal,
     hasAsistentes,
@@ -15,10 +17,10 @@ const ReservaForm = ({ precio = '' }) => {
   const { mutate: realizarReserva, isError, isSuccess } = useMutateReserva()
   const inputForms = [
     {
-      label: 'RUT',
+      label: 'RUT/DNI/PASAPORTE',
       type: 'text',
       name: 'NumeroDocumento',
-      placeholder: '11.111.111-1',
+      placeholder: '',
     },
     {
       label: 'Nombre Completo',
@@ -87,30 +89,32 @@ const ReservaForm = ({ precio = '' }) => {
     Telefono: Yup.string().required('El campo es obligatorio'),
     Genero: Yup.string().required('El campo es obligatorio'),
     NumeroDocumento: Yup.string().required('El campo es obligatorio'),
-    RequerimientosEspeciales: Yup.string().required('El campo es obligatorio'),
+    RequerimientosEspeciales: Yup.string(),
     PaisId: Yup.string().required('El campo es obligatorio'),
     ComoSeEntero: Yup.string().required('El campo es obligatorio'),
     Ciudad: Yup.string().required('El campo es obligatorio'),
   })
-  const handleSubmit = async (values) => {
-    const [isValidRut, Rut] = checkRut(values.NumeroDocumento)
-    const usuario = {
-      ...values,
-      NumeroDocumento: Rut,
+  useEffect(() => {
+    if (isSuccess) {
+      router.push('/reservaweb/thanks')
     }
-    setDatosAsistentePrincipal(usuario)
-    if (isValidRut) {
-      if (hasAsistentes()) {
-        if (validLimitAsistentes()) {
-          realizarReserva(reservaRequest)
-        } else {
-          throw new Error('Solo puede haber un maximo de 10 asistentes')
-        }
+  }, [isSuccess])
+
+  const handleSubmit = async (values) => {
+    // setDatosAsistentePrincipal(values)
+    if (hasAsistentes()) {
+      if (validLimitAsistentes()) {
+        realizarReserva({
+          ...reservaRequest,
+          AsistentePrincipal: values,
+          ComoSeEntero: values.ComoSeEntero,
+          RequerimientosEspeciales: values.RequerimientosEspeciales,
+        })
       } else {
-        throw new Error('Debe ingresar los asistentes')
+        throw new Error('Solo puede haber un maximo de 10 asistentes')
       }
     } else {
-      throw new Error('RUT Invalido')
+      throw new Error('Debe ingresar los asistentes')
     }
   }
   return (

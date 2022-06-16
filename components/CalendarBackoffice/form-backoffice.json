@@ -1,0 +1,310 @@
+[
+  {
+    "label": "RUT",
+    "type": "text",
+    "name": "NumeroDocumento",
+    "placeholder": "11.111.111-1",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Nombre Completo",
+    "type": "text",
+    "name": "NombreCompleto",
+    "placeholder": "Nombre Apellido",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Email",
+    "type": "email",
+    "name": "CorreoElectronico",
+    "placeholder": "email@example.com",
+    "validations": [
+      {"type":"required"},
+      {"type":"email"}
+    ]
+  },
+  {
+    "label": "Fecha de nacimiento",
+    "type": "date",
+    "name": "FechaNacimiento",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Genero",
+    "type": "select",
+    "name": "Genero",
+    "options": [
+      {
+        "value": "MASCULINO",
+        "text": "Hombre"
+      },
+      {
+        "value": "FEMENINO",
+        "text": "Mujer"
+      }
+    ],
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Telefono",
+    "type": "text",
+    "name": "Telefono",
+    "placeholder": "",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Pais",
+    "type": "select",
+    "name": "PaisId",
+    "options": [
+      {
+        "value": "1",
+        "text": "Chile"
+      }
+    ],
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Ciudad",
+    "type": "text",
+    "name": "Ciudad",
+    "placeholder": "",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Idioma",
+    "type": "select",
+    "name": "Idioma",
+    "options": [
+      {
+        "value": "Español",
+        "text": "Español"
+      },
+      {
+        "value": "Inglés",
+        "text": "Inglés"
+      },
+      {
+        "value": "Portugues",
+        "text": "Portugues"
+      }
+    ],
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Cantidad de asistentes",
+    "type": "number",
+    "name": "CantidadPersonas",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Requerimientos especiales",
+    "type": "textarea",
+    "name": "RequerimientosEspeciales",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Area Solicitante",
+    "type": "text",
+    "name": "AreaSolicitante",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Cantidad de personal de CyT",
+    "type": "text",
+    "name": "PersonalCyt",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Enologo Sommelier",
+    "type": "text",
+    "name": "EnologoSommelier",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Encargado del Tour",
+    "type": "text",
+    "name": "EncargadoTour",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Lugar Almuerzo y Cena",
+    "type": "text",
+    "name": "LugarAlmuerzoCena",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Comentarios del Lugar Almuerzo y Cena",
+    "type": "textarea",
+    "name": "ComentarioLugarAlmuerzoCena",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Copas de Degustacion",
+    "type": "text",
+    "name": "CopasDegustacion",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Estado Vinos de Degustacion",
+    "type": "select",
+    "name": "EstadoVinosDegustacion",
+    "options": [
+      {
+        "value": "No solicitados",
+        "text": "No solicitados"
+      },
+      {
+        "value": "Solicitados",
+        "text": "Solicitados"
+      },
+      {
+        "value": "Recibidos",
+        "text": "Recibidos"
+      }
+    ],
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Comentario Vinos de Degustacion",
+    "type": "textarea",
+    "name": "ComentarioVinosDegustacion",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Estado Vinos de Comidas",
+    "type": "select",
+    "name": "EstadoVinosComidas",
+    "options": [
+      {
+        "value": "No solicitados",
+        "text": "No solicitados"
+      },
+      {
+        "value": "Solicitados",
+        "text": "Solicitados"
+      },
+      {
+        "value": "Recibidos",
+        "text": "Recibidos"
+      }
+    ],
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Comentario Vinos de Comidas",
+    "type": "textarea",
+    "name": "ComentarioVinosComidas",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Estado Regalos Visitas",
+    "type": "select",
+    "name": "EstadoRegalosVisitas",
+    "options": [
+      {
+        "value": "No solicitados",
+        "text": "No solicitados"
+      },
+      {
+        "value": "Solicitados",
+        "text": "Solicitados"
+      },
+      {
+        "value": "Recibidos",
+        "text": "Recibidos"
+      }
+    ],
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Comentario Regalos Visitas",
+    "type": "textarea",
+    "name": "ComentarioRegalosVisitas",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Estado Menu Comidas",
+    "type": "select",
+    "name": "EstadoMenuComidas",
+    "options": [
+      {
+        "value": "No solicitados",
+        "text": "No solicitados"
+      },
+      {
+        "value": "Solicitados",
+        "text": "Solicitados"
+      },
+      {
+        "value": "Recibidos",
+        "text": "Recibidos"
+      }
+    ],
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Comentarios Menu Comidas",
+    "type": "textarea",
+    "name": "ComentariosMenuComidas",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Comentarios Generales",
+    "type": "textarea",
+    "name": "ComentariosGenerales",
+    "validations": [
+      {"type":"required"}
+    ]
+  }
+]

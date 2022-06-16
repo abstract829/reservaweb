@@ -2,6 +2,7 @@ import { useMutateSala, useQuerySalaById } from '../../../hooks/salas'
 import { dateParse } from '../../../utils/utils'
 import Alert from '../../Alert'
 import Alerts from '../../Alerts'
+import ConfirmModal from '../../ConfirmModal'
 import DefaultTable from '../../DefaultTable'
 import LoaderWhen from '../../LoaderWhen'
 import ModalComponent from '../../Modal'
@@ -37,8 +38,12 @@ const FechasBloqueadas = ({ id }) => {
             <tr key={fecha.SalaFechaBloqueoId}>
               <td className="td-default">{dateParse(fecha.Fecha)}</td>
               <td className="td-default max-w-[16rem]">{fecha.Motivo}</td>
-              <td className="td-edited" onClick={() => handleSubmit(fecha)}>
-                Eliminar
+              <td>
+                <ConfirmModal
+                  onSubmit={() => handleSubmit(fecha)}
+                  title={`Eliminar Temporada`}
+                  btn={<span className="td-edited">Eliminar</span>}
+                />
               </td>
             </tr>
           ))}

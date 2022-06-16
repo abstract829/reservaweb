@@ -8,10 +8,6 @@ const Sidebar = ({ collapsed }) => {
       name: 'Usuarios',
       routes: [
         {
-          name: 'Home',
-          path: '/dashboard',
-        },
-        {
           name: 'Lista de usuarios',
           path: '/dashboard/lista-usuarios',
         },
@@ -44,6 +40,15 @@ const Sidebar = ({ collapsed }) => {
         {
           name: 'Lista de usuarios',
           path: '/dashboard/lista-usuariosempresa',
+        },
+      ],
+    },
+    {
+      name: 'Reservas',
+      routes: [
+        {
+          name: 'Calendario',
+          path: '/dashboard/reserva-calendario',
         },
       ],
     },

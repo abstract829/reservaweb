@@ -31,6 +31,9 @@
 .td-edited{
   @apply px-6 py-4 font-medium cursor-pointer text-primary hover:underline
 }
+.calendar-item{
+  @apply px-4 py-2 font-semibold text-white shadow cursor-pointer bg-primary rounded-3xl
+}
 /* SPINNER LOADER*/
 .lds-ring {
   display: inline-block;

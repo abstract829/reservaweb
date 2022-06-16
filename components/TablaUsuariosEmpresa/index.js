@@ -12,7 +12,6 @@ export default function TablaUsuariosEmpresa() {
   }
   const handleSelectChange = (value) => {
     setId(value)
-    console.log(value)
   }
   return (
     <>

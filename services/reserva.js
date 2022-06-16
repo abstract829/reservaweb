@@ -8,3 +8,7 @@ export const fetchRealizarReserva = async (req) => {
   const { data } = await api.post('/api/reserva/solicitarWeb', req)
   return data
 }
+export const fetchObtenerReservas = async () => {
+  const { data } = await api.get('/api/reserva/listarTodas')
+  return data
+}

@@ -1,18 +1,13 @@
-import { useEffect } from 'react'
-import { useState } from 'react'
 import {
   useDeleteUsuarioEmpresa,
   useQueryUsuariosEmpresa,
 } from '../../hooks/empresas'
 import useSearch from '../../hooks/useSearch'
-import { fetchListarUsuariosEmpresa } from '../../services/empresas'
-import { checkRut } from '../../utils/utils'
 import Alerts from '../Alerts'
+import ConfirmModal from '../ConfirmModal'
 import DefaultTable from '../DefaultTable'
-import FormikModal from '../FormikForm/FormikModal'
 import LoaderWhen from '../LoaderWhen'
 import ModalComponent from '../Modal'
-import ModalRenderProps from '../ModalRenderProps'
 import PlusButton from '../PlusButton'
 import AddUsuarioEmpresa from './AddUsuarioEmpresa'
 import EditUsuarioEmpresa from './EditUsuarioEmpresa'
@@ -41,6 +36,7 @@ const Table = ({ empresaId }) => {
   ]
 
   const handleDelete = (id) => {
+    console.log(id)
     deleteUsuario(id)
   }
   if (isLoading) {
@@ -78,11 +74,12 @@ const Table = ({ empresaId }) => {
                   content={<EditUsuarioEmpresa usuario={usuario} />}
                 />
               </td>
-              <td
-                className="td-edited"
-                onClick={() => handleDelete(usuario.PersonaId)}
-              >
-                Eliminar
+              <td>
+                <ConfirmModal
+                  onSubmit={() => handleDelete(usuario.PersonaId)}
+                  title={`Eliminar ${usuario.NombreCompleto}`}
+                  btn={<span className="td-edited">Eliminar</span>}
+                />
               </td>
             </tr>
           ))}
