@@ -1,8 +1,10 @@
 import useReserva from '../../hooks/useReserva'
 import DefaultTable from '../DefaultTable'
 import ModalComponent from '../Modal'
+import ModalRP from '../ModalRP'
 import PlusButton from '../PlusButton'
 import AddAsistente from './AddAsistente'
+import EditAsistente from './EditAsistente'
 
 export default function AsistentesTable() {
   const {
@@ -20,12 +22,11 @@ export default function AsistentesTable() {
   ]
   return (
     <>
-      <ModalComponent
-        title="Agregar Asistente"
-        btn={<PlusButton />}
-        content={<AddAsistente />}
-      />
-      <DefaultTable columns={columns}>
+      <ModalRP title="Agregar Asistente" btn={<PlusButton />}>
+        {(closeModal) => <AddAsistente closeModal={closeModal} />}
+      </ModalRP>
+
+      <DefaultTable columns={columns} extra={1}>
         {Asistentes.length > 0 &&
           Asistentes.map((asistente, i) => (
             <tr key={i} className="bg-white border-b ">
@@ -37,6 +38,19 @@ export default function AsistentesTable() {
               <td className="td-default">{asistente.PaisId}</td>
               <td className="td-default">{asistente.NumeroDocumento}</td>
               <td className="td-default">{asistente.Telefono}</td>
+              <td className="td-default">
+                <ModalRP
+                  title="Editar Asistente"
+                  btn={<span className="td-edited">Editar</span>}
+                >
+                  {(closeModal) => (
+                    <EditAsistente
+                      closeModal={closeModal}
+                      asistente={asistente}
+                    />
+                  )}
+                </ModalRP>
+              </td>
             </tr>
           ))}
       </DefaultTable>

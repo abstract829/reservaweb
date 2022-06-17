@@ -1,6 +1,5 @@
 import Sidebar from './Sidebar'
-import { AiOutlineMenu } from 'react-icons/ai'
-import { useState } from 'react'
+
 const DashboardLayout = ({ children }) => {
   return (
     <div className="flex h-screen w-100">

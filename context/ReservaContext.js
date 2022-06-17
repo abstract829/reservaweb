@@ -11,9 +11,7 @@ const INITIAL_STATE = {
 }
 export const ReservaProvider = ({ children }) => {
   const [reservaRequest, setReservaRequest] = useState(INITIAL_STATE)
-  useEffect(() => {
-    console.log(reservaRequest)
-  }, [reservaRequest])
+
   const hasAsistentes = () => {
     return reservaRequest.Asistentes.length > 0
   }
@@ -51,6 +49,19 @@ export const ReservaProvider = ({ children }) => {
       }
     })
   }
+  const editAsistente = (asistente) => {
+    setReservaRequest((prev) => {
+      return {
+        ...prev,
+        Asistentes: prev.Asistentes.map((a) => {
+          if (a.NumeroDocumento === asistente.NumeroDocumento) {
+            return asistente
+          }
+          return a
+        }),
+      }
+    })
+  }
   return (
     <ReservaContext.Provider
       value={{
@@ -61,6 +72,7 @@ export const ReservaProvider = ({ children }) => {
         resetReserva,
         hasAsistentes,
         validLimitAsistentes,
+        editAsistente,
       }}
     >
       {children}

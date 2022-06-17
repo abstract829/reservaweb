@@ -13,6 +13,7 @@ const ReservaForm = ({ precio = '' }) => {
     hasAsistentes,
     reservaRequest,
     validLimitAsistentes,
+    resetReserva,
   } = useReserva()
   const { mutate: realizarReserva, isError, isSuccess } = useMutateReserva()
   const inputForms = [
@@ -97,6 +98,7 @@ const ReservaForm = ({ precio = '' }) => {
   useEffect(() => {
     if (isSuccess) {
       router.push('/reservaweb/thanks')
+      resetReserva()
     }
   }, [isSuccess])
 

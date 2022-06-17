@@ -5,8 +5,8 @@ import { checkRut } from '../../utils/utils'
 import Alerts from '../Alerts'
 import FormikForm from '../FormikForm'
 
-const AddAsistente = ({ setAsistentes, closeModal }) => {
-  const { setAsistente } = useReserva()
+const EditAsistente = ({ setAsistentes, closeModal, asistente }) => {
+  const { editAsistente } = useReserva()
   const [success, setSuccess] = useState(false)
   const inputForms = [
     {
@@ -58,14 +58,14 @@ const AddAsistente = ({ setAsistentes, closeModal }) => {
     },
   ]
   const initialValues = {
-    NombreCompleto: '',
-    CorreoElectronico: '',
-    NumeroDocumento: '',
-    Telefono: '',
-    FechaNacimiento: '',
-    Genero: 'MASCULINO',
-    PaisId: '1',
-    Ciudad: '',
+    NombreCompleto: asistente.NombreCompleto,
+    CorreoElectronico: asistente.CorreoElectronico,
+    NumeroDocumento: asistente.NumeroDocumento,
+    Telefono: asistente.Telefono,
+    FechaNacimiento: asistente.FechaNacimiento,
+    Genero: asistente.Genero,
+    PaisId: asistente.PaisId,
+    Ciudad: asistente.Ciudad,
   }
   const validationSchema = Yup.object().shape({
     CorreoElectronico: Yup.string()
@@ -81,7 +81,7 @@ const AddAsistente = ({ setAsistentes, closeModal }) => {
     Ciudad: Yup.string().required('El campo es obligatorio'),
   })
   const handleSubmit = (values) => {
-    setAsistente(values)
+    editAsistente(values)
     setSuccess(true)
     setTimeout(() => {
       closeModal()
@@ -101,11 +101,11 @@ const AddAsistente = ({ setAsistentes, closeModal }) => {
         <Alerts
           successIf={success}
           failedIf={false}
-          succesText="Asistente agregado correctamente!"
+          succesText="Asistente editado correctamente!"
           failedText="Hubo un error inesperado"
         />
       </div>
     </>
   )
 }
-export default AddAsistente
+export default EditAsistente
