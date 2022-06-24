@@ -1,11 +1,12 @@
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-const Home = () => {
-  const router = useRouter()
-  useEffect(() => {
-    router.push('/auth/sign-in')
-  }, [])
-  return null
-}
+import CustomCalendar from '../components/Calendar'
 
-export default Home
+const ReservaPage = () => {
+  return (
+    <div className="bg-[url('../public/imgs/bgdonmelchor.jpg')] ">
+      <div className="py-12 bg-black font-primary bg-opacity-80">
+        <CustomCalendar />
+      </div>
+    </div>
+  )
+}
+export default ReservaPage

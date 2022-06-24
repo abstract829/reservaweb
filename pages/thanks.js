@@ -8,10 +8,7 @@ const ThanksPage = () => {
         <div className="flex flex-col items-center justify-center h-full text-3xl text-center text-white">
           <p>Gracias por su solicitud!</p>
           <p>Nos pondremos en contacto con usted</p>
-          <button
-            className="mt-12 button"
-            onClick={() => router.push('/reservaweb')}
-          >
+          <button className="mt-12 button" onClick={() => router.push('/')}>
             Volver a la reserva
           </button>
         </div>

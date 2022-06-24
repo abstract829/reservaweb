@@ -97,7 +97,7 @@ const ReservaForm = ({ precio = '', closeModal }) => {
   })
   useEffect(() => {
     if (isSuccess) {
-      router.push('/reservaweb/thanks')
+      router.push('/thanks')
       resetReserva()
     }
   }, [isSuccess])

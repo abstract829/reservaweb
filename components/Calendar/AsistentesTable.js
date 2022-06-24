@@ -1,6 +1,5 @@
 import useReserva from '../../hooks/useReserva'
 import DefaultTable from '../DefaultTable'
-import ModalComponent from '../Modal'
 import ModalRP from '../ModalRP'
 import PlusButton from '../PlusButton'
 import AddAsistente from './AddAsistente'

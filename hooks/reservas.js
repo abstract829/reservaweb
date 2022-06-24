@@ -8,21 +8,14 @@ import {
   fetchRealizarReservaBackOffice,
   fetchRechazarReserva,
 } from '../services/reserva'
-import useAuth from './useAuth'
 
 const key = 'reservas'
 
 export const useQueryCalendario = ({ Fecha }) => {
-  const { isAuthenticated } = useAuth()
-  return useQuery([key, Fecha], () => fetchObtenerCalendario({ Fecha }), {
-    enabled: isAuthenticated,
-  })
+  return useQuery([key, Fecha], () => fetchObtenerCalendario({ Fecha }))
 }
 export const useQueryReservas = () => {
-  const { isAuthenticated } = useAuth()
-  return useQuery([key, 'todas'], fetchObtenerReservas, {
-    enabled: isAuthenticated,
-  })
+  return useQuery([key, 'todas'], fetchObtenerReservas)
 }
 export const useMutateReserva = () => {
   const queryClient = useQueryClient()

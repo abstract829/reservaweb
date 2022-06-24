@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import * as Yup from 'yup'
 import useReserva from '../../hooks/useReserva'
-import { checkRut } from '../../utils/utils'
 import Alerts from '../Alerts'
 import FormikForm from '../FormikForm'
 
