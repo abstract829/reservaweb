@@ -50,15 +50,16 @@
     ]
   },
   {
-    "label": "Requerimientos especiales",
-    "type": "textarea",
-    "name": "RequerimientosEspeciales"
-  },
-  {
     "label": "Area Solicitante",
     "type": "text",
     "name": "AreaSolicitante"
   },
+  {
+    "label": "Requerimientos especiales",
+    "type": "textarea",
+    "name": "RequerimientosEspeciales"
+  },
+ 
   {
     "label": "Cantidad de personal de CyT",
     "type": "text",
@@ -80,15 +81,16 @@
     "name": "LugarAlmuerzoCena"
   },
   {
-    "label": "Comentarios del Lugar Almuerzo y Cena",
-    "type": "textarea",
-    "name": "ComentarioLugarAlmuerzoCena"
-  },
-  {
     "label": "Copas de Degustacion",
     "type": "text",
     "name": "CopasDegustacion"
   },
+  {
+    "label": "Comentarios del Lugar Almuerzo y Cena",
+    "type": "textarea",
+    "name": "ComentarioLugarAlmuerzoCena"
+  },
+  
   {
     "label": "Estado Vinos de Degustacion",
     "type": "select",

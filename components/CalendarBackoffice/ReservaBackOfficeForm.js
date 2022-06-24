@@ -26,7 +26,6 @@ const ReservaBackOfficeForm = ({ precio = '', closeModal, dataSala }) => {
         PersonaId: 8,
       },
     }
-    console.log(request)
     realizarReserva(request)
   }
   return (

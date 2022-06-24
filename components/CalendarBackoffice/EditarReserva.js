@@ -37,17 +37,18 @@ const EditarReserva = ({ precio = '', closeModal, sala }) => {
       validations: [{ type: 'required' }],
     },
     {
-      label: 'Requerimientos especiales',
-      type: 'textarea',
-      name: 'RequerimientosEspeciales',
-      value: validateValue(sala.RequerimientosEspeciales),
-    },
-    {
       label: 'Area Solicitante',
       type: 'text',
       name: 'AreaSolicitante',
       value: validateValue(sala.AreaSolicitante),
     },
+    {
+      label: 'Requerimientos especiales',
+      type: 'textarea',
+      name: 'RequerimientosEspeciales',
+      value: validateValue(sala.RequerimientosEspeciales),
+    },
+
     {
       label: 'Cantidad de personal de CyT',
       type: 'text',
