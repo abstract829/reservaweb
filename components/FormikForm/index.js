@@ -10,6 +10,8 @@ const FormikForm = ({
   submitFunction,
   btnText,
   scroll = false,
+  closeForm,
+  enableCerrar = true,
 }) => {
   return (
     <Formik
@@ -43,14 +45,35 @@ const FormikForm = ({
               />
             ))}
           </div>
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="flex items-center justify-center w-full mt-8 font-bold uppercase button"
-          >
-            <LoadIndicatorIf isTrue={isSubmitting} />
-            {btnText}
-          </button>
+
+          {enableCerrar ? (
+            <div className="grid grid-cols-12">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="flex items-center justify-center w-full col-span-6 mt-8 font-bold uppercase button-secondary"
+              >
+                <LoadIndicatorIf isTrue={isSubmitting} />
+                {btnText}
+              </button>
+              <button
+                type="button"
+                onClick={closeForm}
+                className="flex items-center justify-center col-span-4 col-start-9 mt-8 font-bold uppercase button-cancel"
+              >
+                Cerrar
+              </button>
+            </div>
+          ) : (
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="flex items-center justify-center w-full col-span-6 mt-8 font-bold uppercase button"
+            >
+              <LoadIndicatorIf isTrue={isSubmitting} />
+              {btnText}
+            </button>
+          )}
         </Form>
       )}
     </Formik>

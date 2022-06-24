@@ -4,7 +4,14 @@ import * as Yup from 'yup'
 import LoadIndicatorIf from '../LoadIndicatorIf'
 import RenderIf from '../RenderIf'
 
-const NewForm = ({ style, className, form, submitFunction }) => {
+const NewForm = ({
+  style,
+  className,
+  form,
+  submitFunction,
+  btnText,
+  closeForm,
+}) => {
   const initialValues = {}
   const validations = {}
 
@@ -65,14 +72,31 @@ const NewForm = ({ style, className, form, submitFunction }) => {
                 ))}
               </div>
             </div>
-            <button
+            <div className="grid grid-cols-12">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="flex items-center justify-center w-full col-span-6 mt-8 font-bold uppercase button-secondary"
+              >
+                <LoadIndicatorIf isTrue={isSubmitting} />
+                {btnText}
+              </button>
+              <button
+                type="button"
+                onClick={closeForm}
+                className="flex items-center justify-center col-span-4 col-start-9 mt-8 font-bold uppercase button-cancel"
+              >
+                Cerrar
+              </button>
+            </div>
+            {/* <button
               type="submit"
               disabled={isSubmitting}
               className="flex items-center justify-center w-full mt-8 font-bold uppercase button"
             >
               <LoadIndicatorIf isTrue={isSubmitting} />
               Guardar
-            </button>
+            </button> */}
           </Form>
         )}
       </Formik>

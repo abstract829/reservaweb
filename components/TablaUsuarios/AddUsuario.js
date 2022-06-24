@@ -4,7 +4,7 @@ import { useQueryPerfilesActivos } from '../../hooks/perfiles'
 import FormikForm from '../FormikForm'
 import Alert from '../Alert'
 import Alerts from '../Alerts'
-const AddUsuario = () => {
+const AddUsuario = ({ closeModal }) => {
   const {
     data: listadoPerfilesActivos,
     isLoading,
@@ -92,6 +92,7 @@ const AddUsuario = () => {
           validationSchema={validationSchema}
           submitFunction={handleSubmit}
           btnText="Guardar"
+          closeForm={closeModal}
         />
       </div>
       <Alerts

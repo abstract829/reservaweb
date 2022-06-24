@@ -11,6 +11,7 @@ const FormikReserva = ({
   validationSchema,
   submitFunction,
   btnText,
+  closeForm,
 }) => {
   const [isOtro, setIsOtro] = useState(false)
   const [otroValue, setOtroValue] = useState('')
@@ -43,7 +44,7 @@ const FormikReserva = ({
       }}
     >
       {({ errors, handleSubmit, isSubmitting }) => (
-        <Form onSubmit={handleSubmit} className="max-w-5xl mx-auto ">
+        <Form onSubmit={handleSubmit} className="h-auto max-w-5xl">
           <RenderIf isTrue={errors.submit}>
             <span className="p-2 text-white bg-red-400">{errors.submit}</span>
           </RenderIf>
@@ -111,14 +112,23 @@ const FormikReserva = ({
               <AsistentesTable />
             </div>
           </div>
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="flex items-center justify-center w-full mt-8 font-bold uppercase button"
-          >
-            <LoadIndicatorIf isTrue={isSubmitting} />
-            {btnText}
-          </button>
+          <div className="grid grid-cols-12">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="flex items-center justify-center w-full col-span-6 mt-8 font-bold uppercase button-secondary"
+            >
+              <LoadIndicatorIf isTrue={isSubmitting} />
+              {btnText}
+            </button>
+            <button
+              type="button"
+              onClick={closeForm}
+              className="flex items-center justify-center col-span-4 col-start-9 mt-8 font-bold uppercase button-cancel"
+            >
+              Cerrar
+            </button>
+          </div>
         </Form>
       )}
     </Formik>

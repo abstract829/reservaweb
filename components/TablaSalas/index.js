@@ -4,6 +4,7 @@ import Alert from '../Alert'
 import DefaultTable from '../DefaultTable'
 import LoaderWhen from '../LoaderWhen'
 import ModalComponent from '../Modal'
+import ModalRP from '../ModalRP'
 import PlusButton from '../PlusButton'
 import RenderIf from '../RenderIf'
 import AddSala from './AddSala'
@@ -68,11 +69,17 @@ export default function TablaSalas() {
                     />
                   </td>
                   <td>
-                    <ModalComponent
+                    <ModalRP
                       title={`Dias Bloqueados - Sala ${sala.Nombre}`}
                       btn={<span className="td-edited">Ver</span>}
-                      content={<DiasBloqueados id={sala.SalaId} />}
-                    />
+                    >
+                      {(closeModal) => (
+                        <DiasBloqueados
+                          id={sala.SalaId}
+                          closeModal={closeModal}
+                        />
+                      )}
+                    </ModalRP>
                   </td>
                 </RenderIf>
                 <RenderIf isTrue={!isOnline(sala)}>
@@ -81,11 +88,14 @@ export default function TablaSalas() {
                   <td></td>
                 </RenderIf>
                 <td className="text-right">
-                  <ModalComponent
+                  <ModalRP
                     title="Editar Sala"
                     btn={<span className="td-edited">Editar</span>}
-                    content={<EditSala id={sala.SalaId} />}
-                  />
+                  >
+                    {(closeModal) => (
+                      <EditSala id={sala.SalaId} closeModal={closeModal} />
+                    )}
+                  </ModalRP>
                 </td>
               </tr>
             ))}

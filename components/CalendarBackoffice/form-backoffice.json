@@ -1,91 +1,5 @@
 [
   {
-    "label": "RUT",
-    "type": "text",
-    "name": "NumeroDocumento",
-    "placeholder": "11.111.111-1",
-    "validations": [
-      {"type":"required"}
-    ]
-  },
-  {
-    "label": "Nombre Completo",
-    "type": "text",
-    "name": "NombreCompleto",
-    "placeholder": "Nombre Apellido",
-    "validations": [
-      {"type":"required"}
-    ]
-  },
-  {
-    "label": "Email",
-    "type": "email",
-    "name": "CorreoElectronico",
-    "placeholder": "email@example.com",
-    "validations": [
-      {"type":"required"},
-      {"type":"email"}
-    ]
-  },
-  {
-    "label": "Fecha de nacimiento",
-    "type": "date",
-    "name": "FechaNacimiento",
-    "validations": [
-      {"type":"required"}
-    ]
-  },
-  {
-    "label": "Genero",
-    "type": "select",
-    "name": "Genero",
-    "options": [
-      {
-        "value": "MASCULINO",
-        "text": "Hombre"
-      },
-      {
-        "value": "FEMENINO",
-        "text": "Mujer"
-      }
-    ],
-    "validations": [
-      {"type":"required"}
-    ]
-  },
-  {
-    "label": "Telefono",
-    "type": "text",
-    "name": "Telefono",
-    "placeholder": "",
-    "validations": [
-      {"type":"required"}
-    ]
-  },
-  {
-    "label": "Pais",
-    "type": "select",
-    "name": "PaisId",
-    "options": [
-      {
-        "value": "1",
-        "text": "Chile"
-      }
-    ],
-    "validations": [
-      {"type":"required"}
-    ]
-  },
-  {
-    "label": "Ciudad",
-    "type": "text",
-    "name": "Ciudad",
-    "placeholder": "",
-    "validations": [
-      {"type":"required"}
-    ]
-  },
-  {
     "label": "Idioma",
     "type": "select",
     "name": "Idioma",
@@ -103,6 +17,26 @@
         "text": "Portugues"
       }
     ],
+    "value":"Español",
+    "validations": [
+      {"type":"required"}
+    ]
+  },
+  {
+    "label": "Tipo Reserva",
+    "type": "select",
+    "name": "TipoReserva",
+    "options": [
+      {
+        "value": "WEB",
+        "text": "Web"
+      },
+      {
+        "value": "AGENCIA",
+        "text": "Agencia"
+      }
+    ],
+    "value":"WEB",
     "validations": [
       {"type":"required"}
     ]
@@ -118,66 +52,42 @@
   {
     "label": "Requerimientos especiales",
     "type": "textarea",
-    "name": "RequerimientosEspeciales",
-    "validations": [
-      {"type":"required"}
-    ]
+    "name": "RequerimientosEspeciales"
   },
   {
     "label": "Area Solicitante",
     "type": "text",
-    "name": "AreaSolicitante",
-    "validations": [
-      {"type":"required"}
-    ]
+    "name": "AreaSolicitante"
   },
   {
     "label": "Cantidad de personal de CyT",
     "type": "text",
-    "name": "PersonalCyt",
-    "validations": [
-      {"type":"required"}
-    ]
+    "name": "PersonalCyt"
   },
   {
     "label": "Enologo Sommelier",
     "type": "text",
-    "name": "EnologoSommelier",
-    "validations": [
-      {"type":"required"}
-    ]
+    "name": "EnologoSommelier"
   },
   {
     "label": "Encargado del Tour",
     "type": "text",
-    "name": "EncargadoTour",
-    "validations": [
-      {"type":"required"}
-    ]
+    "name": "EncargadoTour"
   },
   {
     "label": "Lugar Almuerzo y Cena",
     "type": "text",
-    "name": "LugarAlmuerzoCena",
-    "validations": [
-      {"type":"required"}
-    ]
+    "name": "LugarAlmuerzoCena"
   },
   {
     "label": "Comentarios del Lugar Almuerzo y Cena",
     "type": "textarea",
-    "name": "ComentarioLugarAlmuerzoCena",
-    "validations": [
-      {"type":"required"}
-    ]
+    "name": "ComentarioLugarAlmuerzoCena"
   },
   {
     "label": "Copas de Degustacion",
     "type": "text",
-    "name": "CopasDegustacion",
-    "validations": [
-      {"type":"required"}
-    ]
+    "name": "CopasDegustacion"
   },
   {
     "label": "Estado Vinos de Degustacion",
@@ -196,18 +106,12 @@
         "value": "Recibidos",
         "text": "Recibidos"
       }
-    ],
-    "validations": [
-      {"type":"required"}
     ]
   },
   {
     "label": "Comentario Vinos de Degustacion",
     "type": "textarea",
-    "name": "ComentarioVinosDegustacion",
-    "validations": [
-      {"type":"required"}
-    ]
+    "name": "ComentarioVinosDegustacion"
   },
   {
     "label": "Estado Vinos de Comidas",
@@ -226,18 +130,12 @@
         "value": "Recibidos",
         "text": "Recibidos"
       }
-    ],
-    "validations": [
-      {"type":"required"}
     ]
   },
   {
     "label": "Comentario Vinos de Comidas",
     "type": "textarea",
-    "name": "ComentarioVinosComidas",
-    "validations": [
-      {"type":"required"}
-    ]
+    "name": "ComentarioVinosComidas"
   },
   {
     "label": "Estado Regalos Visitas",
@@ -256,18 +154,12 @@
         "value": "Recibidos",
         "text": "Recibidos"
       }
-    ],
-    "validations": [
-      {"type":"required"}
     ]
   },
   {
     "label": "Comentario Regalos Visitas",
     "type": "textarea",
-    "name": "ComentarioRegalosVisitas",
-    "validations": [
-      {"type":"required"}
-    ]
+    "name": "ComentarioRegalosVisitas"
   },
   {
     "label": "Estado Menu Comidas",
@@ -286,25 +178,16 @@
         "value": "Recibidos",
         "text": "Recibidos"
       }
-    ],
-    "validations": [
-      {"type":"required"}
     ]
   },
   {
     "label": "Comentarios Menu Comidas",
     "type": "textarea",
-    "name": "ComentariosMenuComidas",
-    "validations": [
-      {"type":"required"}
-    ]
+    "name": "ComentariosMenuComidas"
   },
   {
     "label": "Comentarios Generales",
     "type": "textarea",
-    "name": "ComentariosGenerales",
-    "validations": [
-      {"type":"required"}
-    ]
+    "name": "ComentariosGenerales"
   }
 ]

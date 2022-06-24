@@ -37,16 +37,8 @@ export default function ModalRP({
         <h3 className="mb-8 bg-[#908161] p-2 text-center text-white ">
           {title}
         </h3>
-        <div className="px-4 py-2">
+        <div className="px-4 ">
           <div>{children(closeModal)}</div>
-          <div className="flex justify-end mt-8">
-            <button
-              className="px-4 py-2 text-white bg-slate-600"
-              onClick={closeModal}
-            >
-              Cerrar
-            </button>
-          </div>
         </div>
       </Modal>
     </div>

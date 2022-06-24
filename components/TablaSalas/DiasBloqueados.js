@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import Alerts from '../Alerts'
 import LoaderWhen from '../LoaderWhen'
 import Alert from '../Alert'
-const DiasBloqueados = ({ id }) => {
+const DiasBloqueados = ({ id, closeModal }) => {
   const { data: sala, isLoading, isError } = useQuerySalaById({ id })
   const {
     mutate: editSala,
@@ -117,6 +117,7 @@ const DiasBloqueados = ({ id }) => {
           submitFunction={handleSubmit}
           btnText="Guardar"
           scroll={true}
+          closeForm={closeModal}
         />
         <Alerts
           successIf={isSuccess}

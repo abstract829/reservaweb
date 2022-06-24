@@ -5,9 +5,14 @@ import Alert from '../Alert'
 import LoaderWhen from '../LoaderWhen'
 import { parseDayNumberToName, parseMonthNumberToName } from '../../utils/utils'
 import RenderIf from '../RenderIf'
-import ModalComponent from '../Modal'
+import ModalRP from '../ModalRP'
 import useReserva from '../../hooks/useReserva'
 import PlusButton from '../PlusButton'
+import ConfirmarHorario from './ConfirmarHorario'
+import ModalComponent from '../Modal'
+import EditarReserva from './EditarReserva'
+import AprobarReserva from './AprobarReserva'
+import ReservaCancelada from './ReservaCancelada'
 
 const Month = () => {
   const [calendario, setCalendario] = useState([])
@@ -35,9 +40,6 @@ const Month = () => {
       )
     }
   }, [month, year, data])
-  useEffect(() => {
-    console.log(calendario)
-  }, [calendario])
 
   const increaseYear = () => {
     setYear((prev) => prev + 1)
@@ -73,10 +75,18 @@ const Month = () => {
       fecha
     )} de ${parseMonthNumberToName(month)} de ${year} a las ${horario}`
   }
+  const isSolicitada = (sala) => {
+    return sala.TipoReserva === 'WEB' && sala.Estado === 'SOLICITADA'
+  }
+  const isCancelada = (sala) => {
+    return sala.Estado === 'CANCELADA'
+  }
   return (
     <LoaderWhen isTrue={isLoading}>
       <div className="flex items-center justify-between">
-        <PlusButton />
+        <ModalRP btn={<PlusButton />} title="Validar Horario">
+          {(closeModal) => <ConfirmarHorario closeModal={closeModal} />}
+        </ModalRP>
         <div className="flex gap-8 mb-8 ">
           <div className="flex items-center gap-4">
             <GrFormPrevious
@@ -126,10 +136,42 @@ const Month = () => {
                         key={i}
                       >
                         <li className="text-center calendar-item">
-                          <p>{sala.SalaNombre}</p>
-                          <p>
-                            {sala.HorarioInicio} - {sala.HorarioTermino}
-                          </p>
+                          <ModalRP
+                            title={`Editar ${sala.SalaNombre} ${sala.HorarioInicio} -
+                          ${sala.HorarioTermino}`}
+                            btn={
+                              <div>
+                                <p>{sala.SalaNombre}</p>
+                                <p>
+                                  {sala.HorarioInicio} - {sala.HorarioTermino}
+                                </p>
+                              </div>
+                            }
+                          >
+                            {(closeModal) => (
+                              <>
+                                <RenderIf isTrue={isSolicitada(sala)}>
+                                  <AprobarReserva
+                                    closeModal={closeModal}
+                                    sala={sala}
+                                  />
+                                </RenderIf>
+                                <RenderIf
+                                  isTrue={
+                                    !isSolicitada(sala) && !isCancelada(sala)
+                                  }
+                                >
+                                  <EditarReserva
+                                    closeModal={closeModal}
+                                    sala={sala}
+                                  />
+                                </RenderIf>
+                                <RenderIf isTrue={isCancelada(sala)}>
+                                  <ReservaCancelada closeModal={closeModal} />
+                                </RenderIf>
+                              </>
+                            )}
+                          </ModalRP>
                         </li>
                       </ul>
                     ))}
@@ -143,13 +185,49 @@ const Month = () => {
                         </p>
                       }
                       content={
-                        <ul className="flex items-center justify-center gap-2 mt-4 text-xl w-96 ">
+                        <ul className="flex flex-wrap items-center justify-center gap-2 mt-4 text-xl w-96">
                           {Reserva.map((sala, i) => (
                             <li key={i} className="text-center calendar-item">
-                              <p>{sala.SalaNombre}</p>
-                              <p>
-                                {sala.HorarioInicio} - {sala.HorarioTermino}
-                              </p>
+                              <ModalRP
+                                title={`Editar ${sala.SalaNombre} ${sala.HorarioInicio} -
+                                ${sala.HorarioTermino}`}
+                                btn={
+                                  <div>
+                                    <p>{sala.SalaNombre}</p>
+                                    <p>
+                                      {sala.HorarioInicio} -
+                                      {sala.HorarioTermino}
+                                    </p>
+                                  </div>
+                                }
+                              >
+                                {(closeModal) => (
+                                  <>
+                                    <RenderIf isTrue={isSolicitada(sala)}>
+                                      <AprobarReserva
+                                        closeModal={closeModal}
+                                        sala={sala}
+                                      />
+                                    </RenderIf>
+                                    <RenderIf
+                                      isTrue={
+                                        !isSolicitada(sala) &&
+                                        !isCancelada(sala)
+                                      }
+                                    >
+                                      <EditarReserva
+                                        closeModal={closeModal}
+                                        sala={sala}
+                                      />
+                                    </RenderIf>
+                                    <RenderIf isTrue={isCancelada(sala)}>
+                                      <ReservaCancelada
+                                        closeModal={closeModal}
+                                      />
+                                    </RenderIf>
+                                  </>
+                                )}
+                              </ModalRP>
                             </li>
                           ))}
                         </ul>

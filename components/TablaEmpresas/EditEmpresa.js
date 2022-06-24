@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 import Alerts from '../Alerts'
 import { useMutateEmpresa } from '../../hooks/empresas'
 import { checkRut } from '../../utils/utils'
-const EditEmpresa = ({ empresa }) => {
+const EditEmpresa = ({ empresa, closeModal }) => {
   const {
     mutate: editEmpresa,
     isError: isErrorMutating,
@@ -72,6 +72,7 @@ const EditEmpresa = ({ empresa }) => {
           validationSchema={validationSchema}
           submitFunction={handleSubmit}
           btnText="Guardar"
+          closeForm={closeModal}
         />
       </div>
       <Alerts

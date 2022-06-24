@@ -6,7 +6,7 @@ import useReserva from '../../hooks/useReserva'
 import Alerts from '../Alerts'
 import FormikReserva from '../FormikForm/FormikReserva'
 
-const ReservaForm = ({ precio = '' }) => {
+const ReservaForm = ({ precio = '', closeModal }) => {
   const router = useRouter()
   const {
     setDatosAsistentePrincipal,
@@ -104,19 +104,15 @@ const ReservaForm = ({ precio = '' }) => {
 
   const handleSubmit = async (values) => {
     // setDatosAsistentePrincipal(values)
-    if (hasAsistentes()) {
-      if (validLimitAsistentes()) {
-        realizarReserva({
-          ...reservaRequest,
-          AsistentePrincipal: values,
-          ComoSeEntero: values.ComoSeEntero,
-          RequerimientosEspeciales: values.RequerimientosEspeciales,
-        })
-      } else {
-        throw new Error('Solo puede haber un maximo de 10 asistentes')
-      }
+    if (validLimitAsistentes()) {
+      realizarReserva({
+        ...reservaRequest,
+        AsistentePrincipal: values,
+        ComoSeEntero: values.ComoSeEntero,
+        RequerimientosEspeciales: values.RequerimientosEspeciales,
+      })
     } else {
-      throw new Error('Debe ingresar los asistentes')
+      throw new Error('Solo puede haber un maximo de 10 asistentes')
     }
   }
   return (
@@ -131,6 +127,7 @@ const ReservaForm = ({ precio = '' }) => {
           validationSchema={validationSchema}
           submitFunction={handleSubmit}
           btnText="Reservar"
+          closeForm={closeModal}
         />
         <Alerts
           successIf={isSuccess}

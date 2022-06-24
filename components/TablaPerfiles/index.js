@@ -4,6 +4,7 @@ import Alert from '../Alert'
 import DefaultTable from '../DefaultTable'
 import LoaderWhen from '../LoaderWhen'
 import ModalComponent from '../Modal'
+import ModalRP from '../ModalRP'
 import PlusButton from '../PlusButton'
 import AddPerfil from './AddPerfil'
 import EditPerfil from './EditPerfil'
@@ -19,11 +20,9 @@ export default function TablaUsuarios() {
   return (
     <>
       <LoaderWhen isTrue={isLoading}>
-        <ModalComponent
-          title="Crear Perfil"
-          btn={<PlusButton />}
-          content={<AddPerfil />}
-        />
+        <ModalRP title="Crear Perfil" btn={<PlusButton />}>
+          {(closeModal) => <AddPerfil closeModal={closeModal} />}
+        </ModalRP>
         <input
           className="input"
           placeholder="Busca un perfil..."
@@ -46,11 +45,17 @@ export default function TablaUsuarios() {
                   />
                 </td>
                 <td className="text-right">
-                  <ModalComponent
+                  <ModalRP
                     title="Editar Perfil"
                     btn={<span className="td-edited">Editar</span>}
-                    content={<EditPerfil id={perfil.PerfilId} />}
-                  />
+                  >
+                    {(closeModal) => (
+                      <EditPerfil
+                        id={perfil.PerfilId}
+                        closeModal={closeModal}
+                      />
+                    )}
+                  </ModalRP>
                 </td>
               </tr>
             ))}

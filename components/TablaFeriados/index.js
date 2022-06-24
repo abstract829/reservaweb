@@ -6,6 +6,7 @@ import ConfirmModal from '../ConfirmModal'
 import DefaultTable from '../DefaultTable'
 import LoaderWhen from '../LoaderWhen'
 import ModalComponent from '../Modal'
+import ModalRP from '../ModalRP'
 import PlusButton from '../PlusButton'
 import AddFeriado from './AddFeriado'
 
@@ -25,11 +26,9 @@ const TablaFeriados = () => {
   }
   return (
     <LoaderWhen isTrue={isLoading}>
-      <ModalComponent
-        title="Agregar feriado"
-        btn={<PlusButton />}
-        content={<AddFeriado />}
-      />
+      <ModalRP title="Agregar feriado" btn={<PlusButton />}>
+        {(closeModal) => <AddFeriado closeModal={closeModal} />}
+      </ModalRP>
       <DefaultTable columns={columns} extra={1}>
         {feriados &&
           feriados.data.map((feriado) => (

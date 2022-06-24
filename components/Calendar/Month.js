@@ -8,6 +8,7 @@ import RenderIf from '../RenderIf'
 import ModalComponent from '../Modal'
 import ReservaForm from './ReservaForm'
 import useReserva from '../../hooks/useReserva'
+import ModalRP from '../ModalRP'
 
 const Month = () => {
   const [calendario, setCalendario] = useState([])
@@ -134,7 +135,7 @@ const Month = () => {
                     <ul className="flex flex-col items-center gap-2 mt-4 text-xl ">
                       {reserva.Horarios.map((horario, i) => (
                         <li key={i}>
-                          <ModalComponent
+                          <ModalRP
                             title={getTitle(reserva.Fecha, horario.Horario)}
                             onOpen={() =>
                               setFechas(reserva.Fecha, horario.Horario)
@@ -145,8 +146,14 @@ const Month = () => {
                                 {horario.Horario}
                               </li>
                             }
-                            content={<ReservaForm precio={horario.precio} />}
-                          />
+                          >
+                            {(closeModal) => (
+                              <ReservaForm
+                                precio={horario.precio}
+                                closeModal={closeModal}
+                              />
+                            )}
+                          </ModalRP>
                         </li>
                       ))}
                     </ul>

@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import Alert from '../Alert'
 import Alerts from '../Alerts'
 import LoaderWhen from '../LoaderWhen'
-const EditUsuario = ({ user }) => {
+const EditUsuario = ({ user, closeModal }) => {
   const {
     data: listadoPerfilesActivos,
     isLoading,
@@ -83,6 +83,7 @@ const EditUsuario = ({ user }) => {
           validationSchema={validationSchema}
           submitFunction={handleSubmit}
           btnText="Guardar"
+          closeForm={closeModal}
         />
       </div>
       <Alerts

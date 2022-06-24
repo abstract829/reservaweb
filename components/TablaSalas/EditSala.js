@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import Alerts from '../Alerts'
 import LoaderWhen from '../LoaderWhen'
 import Alert from '../Alert'
-const EditSala = ({ id }) => {
+const EditSala = ({ id, closeModal }) => {
   const { mutate: editSala, isErrorMutating, isSuccess } = useMutateSala()
   const { data: sala, isError, isLoading } = useQuerySalaById({ id })
   if (isError) {
@@ -84,6 +84,7 @@ const EditSala = ({ id }) => {
           validationSchema={validationSchema}
           submitFunction={handleSubmit}
           btnText="Guardar"
+          closeForm={closeModal}
         />
         <Alerts
           successIf={isSuccess}

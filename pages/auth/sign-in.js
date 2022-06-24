@@ -49,6 +49,7 @@ const SignInPage = () => {
             validationSchema={validationSchema}
             submitFunction={signIn}
             btnText="Ingresar"
+            enableCerrar={false}
           />
         </div>
       </div>

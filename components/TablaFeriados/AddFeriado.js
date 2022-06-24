@@ -2,7 +2,7 @@ import * as Yup from 'yup'
 import { useMutateFeriado } from '../../hooks/feriados'
 import Alerts from '../Alerts'
 import FormikForm from '../FormikForm'
-const AddFeriado = () => {
+const AddFeriado = ({ closeModal }) => {
   const { mutate: editFeriado, isError, isSuccess } = useMutateFeriado()
   const inputForms = [
     {
@@ -32,6 +32,7 @@ const AddFeriado = () => {
         validationSchema={validationSchema}
         submitFunction={handleSubmit}
         btnText="Guardar"
+        closeForm={closeModal}
       />
       <Alerts
         successIf={isSuccess}

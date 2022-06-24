@@ -2,7 +2,7 @@ import FormikForm from '../FormikForm'
 import * as Yup from 'yup'
 import Alerts from '../Alerts'
 import { useMutatePerfil } from '../../hooks/perfiles'
-const AddPerfil = () => {
+const AddPerfil = ({ closeModal }) => {
   const { mutate: editPerfil, isError, isSuccess } = useMutatePerfil()
   const inputForms = [
     {
@@ -40,6 +40,7 @@ const AddPerfil = () => {
         validationSchema={validationSchema}
         submitFunction={handleSubmit}
         btnText="Guardar"
+        closeForm={closeModal}
       />
       <Alerts
         successIf={isSuccess}

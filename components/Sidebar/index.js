@@ -52,6 +52,15 @@ const Sidebar = ({ collapsed }) => {
         },
       ],
     },
+    {
+      name: 'Perfil',
+      routes: [
+        {
+          name: 'Cerrar sesión',
+          path: '/auth/sign-in',
+        },
+      ],
+    },
   ]
 
   return (
@@ -59,9 +68,11 @@ const Sidebar = ({ collapsed }) => {
       <Menu iconShape="square">
         <MenuItem>
           <div className="flex flex-col items-center justify-center">
-            <img src="/imgs/logo.png" className="w-8" />
-            <span className="relative text-xl font-bold uppercase bottom-5">
-              Don Melchor
+            <img src="/imgs/logo.png" className="h-16" />
+            <span className="relative font-bold uppercase bottom-5">
+              <Link href="/dashboard">
+                <a className="text-lg">Don Melchor</a>
+              </Link>
             </span>
           </div>
         </MenuItem>

@@ -6,6 +6,7 @@ import ConfirmModal from '../ConfirmModal'
 import DefaultTable from '../DefaultTable'
 import LoaderWhen from '../LoaderWhen'
 import ModalComponent from '../Modal'
+import ModalRP from '../ModalRP'
 import PlusButton from '../PlusButton'
 import AddEmpresa from './AddEmpresa'
 import EditEmpresa from './EditEmpresa'
@@ -28,11 +29,9 @@ export default function TablaEmpresas() {
   return (
     <>
       <LoaderWhen isTrue={isLoading}>
-        <ModalComponent
-          title="Crear Empresa"
-          btn={<PlusButton />}
-          content={<AddEmpresa />}
-        />
+        <ModalRP title="Crear Empresa" btn={<PlusButton />}>
+          {(closeModal) => <AddEmpresa closeModal={closeModal} />}
+        </ModalRP>
         <input
           className="input"
           placeholder="Busca una empresa..."
@@ -40,7 +39,7 @@ export default function TablaEmpresas() {
           value={searchValue}
           onChange={handleChange}
         />
-        <DefaultTable columns={columns} extra={2}>
+        <DefaultTable columns={columns} extra={1}>
           {listadoEmpresas &&
             filterListado(listadoEmpresas.data).map((empresa) => (
               <tr key={empresa.EmpresaId} className="bg-white border-b ">
@@ -50,19 +49,22 @@ export default function TablaEmpresas() {
                 <td className="td-default">{empresa.Activo}</td>
                 <td className="td-default">{empresa.CodigoSAP}</td>
                 <td className="text-right">
-                  <ModalComponent
+                  <ModalRP
                     title="Editar Empresa"
                     btn={<span className=" td-edited">Editar</span>}
-                    content={<EditEmpresa empresa={empresa} />}
-                  />
+                  >
+                    {(closeModal) => (
+                      <EditEmpresa empresa={empresa} closeModal={closeModal} />
+                    )}
+                  </ModalRP>
                 </td>
-                <td>
+                {/* <td>
                   <ConfirmModal
                     onSubmit={() => handleSubmit(empresa.EmpresaId)}
                     title={`Eliminar ${empresa.Nombre}`}
                     btn={<span className="td-edited">Eliminar</span>}
                   />
-                </td>
+                </td> */}
               </tr>
             ))}
         </DefaultTable>

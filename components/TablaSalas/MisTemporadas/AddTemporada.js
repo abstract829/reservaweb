@@ -2,7 +2,7 @@ import * as Yup from 'yup'
 import { useMutateSala } from '../../../hooks/salas'
 import Alerts from '../../Alerts'
 import FormikForm from '../../FormikForm'
-const AddTemporada = ({ sala }) => {
+const AddTemporada = ({ sala, closeModal }) => {
   const { mutate: editSala, isError, isSuccess } = useMutateSala()
   const inputForms = [
     {
@@ -55,6 +55,7 @@ const AddTemporada = ({ sala }) => {
         validationSchema={validationSchema}
         submitFunction={handleSubmit}
         btnText="Guardar"
+        closeForm={closeModal}
       />
       <Alerts
         successIf={isSuccess}

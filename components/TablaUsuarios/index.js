@@ -3,7 +3,7 @@ import useSearch from '../../hooks/useSearch'
 import Alert from '../Alert'
 import DefaultTable from '../DefaultTable'
 import LoaderWhen from '../LoaderWhen'
-import ModalComponent from '../Modal'
+import ModalRP from '../ModalRP'
 import PlusButton from '../PlusButton'
 import AddUsuario from './AddUsuario'
 import EditUsuario from './EditUsuario'
@@ -18,11 +18,10 @@ export default function TablaUsuarios() {
   return (
     <>
       <LoaderWhen isTrue={isLoading}>
-        <ModalComponent
-          title="Crear Usuario"
-          btn={<PlusButton />}
-          content={<AddUsuario />}
-        />
+        <ModalRP title="Crear Usuario" btn={<PlusButton />}>
+          {(closeModal) => <AddUsuario closeModal={closeModal} />}
+        </ModalRP>
+
         <input
           className="input"
           placeholder="Busca un usuario..."
@@ -40,11 +39,14 @@ export default function TablaUsuarios() {
                 <td className="td-default">{usuario.PerfilNombre}</td>
                 <td className="td-default">{usuario.Activo}</td>
                 <td className="text-right">
-                  <ModalComponent
+                  <ModalRP
                     title="Editar Usuario"
                     btn={<span className=" td-edited">Editar</span>}
-                    content={<EditUsuario user={usuario} />}
-                  />
+                  >
+                    {(closeModal) => (
+                      <EditUsuario user={usuario} closeModal={closeModal} />
+                    )}
+                  </ModalRP>
                 </td>
               </tr>
             ))}

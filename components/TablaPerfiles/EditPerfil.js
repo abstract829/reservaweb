@@ -4,7 +4,7 @@ import Alerts from '../Alerts'
 import { useMutatePerfil, useQueryPerfilById } from '../../hooks/perfiles'
 import LoaderWhen from '../LoaderWhen'
 import Alert from '../Alert'
-const EditPerfil = ({ id }) => {
+const EditPerfil = ({ id, closeModal }) => {
   const { mutate: editPerfil, isErrorMutating, isSuccess } = useMutatePerfil()
   const { data: perfil, isLoading, isError } = useQueryPerfilById({ id })
   if (isError) {
@@ -47,6 +47,7 @@ const EditPerfil = ({ id }) => {
           validationSchema={validationSchema}
           submitFunction={handleSubmit}
           btnText="Guardar"
+          closeForm={closeModal}
         />
         <Alerts
           successIf={isSuccess}

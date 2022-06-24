@@ -6,6 +6,7 @@ import ConfirmModal from '../../ConfirmModal'
 import DefaultTable from '../../DefaultTable'
 import LoaderWhen from '../../LoaderWhen'
 import ModalComponent from '../../Modal'
+import ModalRP from '../../ModalRP'
 import PlusButton from '../../PlusButton'
 import AddTemporada from './AddTemporada'
 import MisHorarios from './MisHorarios'
@@ -28,11 +29,11 @@ const MisTemporadas = ({ id }) => {
   }
   return (
     <LoaderWhen isTrue={isLoading}>
-      <ModalComponent
-        title="Crear Temporada"
-        btn={<PlusButton />}
-        content={<AddTemporada sala={sala && sala.data} />}
-      />
+      <ModalRP title="Crear Temporada" btn={<PlusButton />}>
+        {(closeModal) => (
+          <AddTemporada sala={sala && sala.data} closeModal={closeModal} />
+        )}
+      </ModalRP>
       <DefaultTable columns={columns} extra={1}>
         {sala &&
           sala.data.MisTemporadas.map((temporada) => (

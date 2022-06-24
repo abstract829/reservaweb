@@ -5,7 +5,7 @@ import { useMutateUsuarioEmpresa } from '../../hooks/empresas'
 import { checkRut } from '../../utils/utils'
 import FormikModal from '../FormikForm/FormikModal'
 import PlusButton from '../PlusButton'
-const AddUsuarioEmpresa = ({ EmpresaId }) => {
+const AddUsuarioEmpresa = ({ EmpresaId, closeModal }) => {
   const {
     mutate: addUser,
     isError: isErrorMutating,
@@ -121,6 +121,7 @@ const AddUsuarioEmpresa = ({ EmpresaId }) => {
           submitFunction={handleSubmit}
           btnText="Guardar"
           scroll={true}
+          closeForm={closeModal}
         />
       </div>
       <Alerts

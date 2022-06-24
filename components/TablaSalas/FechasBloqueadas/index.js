@@ -6,6 +6,7 @@ import ConfirmModal from '../../ConfirmModal'
 import DefaultTable from '../../DefaultTable'
 import LoaderWhen from '../../LoaderWhen'
 import ModalComponent from '../../Modal'
+import ModalRP from '../../ModalRP'
 import PlusButton from '../../PlusButton'
 import AddFecha from './AddFecha'
 
@@ -27,11 +28,11 @@ const FechasBloqueadas = ({ id }) => {
   }
   return (
     <LoaderWhen isTrue={isLoading}>
-      <ModalComponent
-        title="Crear Fecha de Bloqueo"
-        btn={<PlusButton />}
-        content={<AddFecha sala={sala && sala.data} />}
-      />
+      <ModalRP title="Crear Fecha de Bloqueo" btn={<PlusButton />}>
+        {(closeModal) => (
+          <AddFecha sala={sala && sala.data} closeModal={closeModal} />
+        )}
+      </ModalRP>
       <DefaultTable columns={columns} extra={1}>
         {sala &&
           sala.data.MisFechasBloqueadas.map((fecha) => (

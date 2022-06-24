@@ -8,6 +8,7 @@ import ConfirmModal from '../ConfirmModal'
 import DefaultTable from '../DefaultTable'
 import LoaderWhen from '../LoaderWhen'
 import ModalComponent from '../Modal'
+import ModalRP from '../ModalRP'
 import PlusButton from '../PlusButton'
 import AddUsuarioEmpresa from './AddUsuarioEmpresa'
 import EditUsuarioEmpresa from './EditUsuarioEmpresa'
@@ -44,11 +45,11 @@ const Table = ({ empresaId }) => {
   }
   return (
     <LoaderWhen isTrue={!listaUsuarios}>
-      <ModalComponent
-        title="Crear Usuario Empresa"
-        btn={<PlusButton />}
-        content={<AddUsuarioEmpresa EmpresaId={empresaId} />}
-      />
+      <ModalRP title="Crear Usuario Empresa" btn={<PlusButton />}>
+        {(closeModal) => (
+          <AddUsuarioEmpresa EmpresaId={empresaId} closeModal={closeModal} />
+        )}
+      </ModalRP>
       <input
         className="input"
         placeholder="Busca un usuario..."
@@ -68,11 +69,17 @@ const Table = ({ empresaId }) => {
               <td className="td-default">{usuario.Ciudad}</td>
               <td className="td-default">{usuario.Telefono}</td>
               <td className="text-right">
-                <ModalComponent
+                <ModalRP
                   title="Editar Usuario Empresa"
                   btn={<span className=" td-edited">Editar</span>}
-                  content={<EditUsuarioEmpresa usuario={usuario} />}
-                />
+                >
+                  {(closeModal) => (
+                    <EditUsuarioEmpresa
+                      usuario={usuario}
+                      closeModal={closeModal}
+                    />
+                  )}
+                </ModalRP>
               </td>
               <td>
                 <ConfirmModal

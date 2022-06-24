@@ -3,7 +3,7 @@ import { useMutateSala } from '../../../../hooks/salas'
 import Alerts from '../../../Alerts'
 import FormikForm from '../../../FormikForm'
 
-const AddHorario = ({ sala, temporada, closeModal }) => {
+const EditHorario = ({ sala, temporada, closeModal, horario }) => {
   const { mutate: editSala, isError, isSuccess } = useMutateSala()
   const inputForms = [
     {
@@ -22,7 +22,7 @@ const AddHorario = ({ sala, temporada, closeModal }) => {
     },
   ]
   const initialValues = {
-    Horario: '',
+    Horario: horario && horario.Horario,
     Disponible: 'SI',
   }
   const validationSchema = Yup.object().shape({
@@ -64,4 +64,4 @@ const AddHorario = ({ sala, temporada, closeModal }) => {
     </div>
   )
 }
-export default AddHorario
+export default EditHorario

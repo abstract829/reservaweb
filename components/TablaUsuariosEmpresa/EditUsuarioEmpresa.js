@@ -3,7 +3,7 @@ import FormikForm from '../FormikForm'
 import Alerts from '../Alerts'
 import { useMutateUsuarioEmpresa } from '../../hooks/empresas'
 import { checkRut } from '../../utils/utils'
-const EditUsuarioEmpresa = ({ usuario }) => {
+const EditUsuarioEmpresa = ({ usuario, closeModal }) => {
   const {
     mutate: editUser,
     isError: isErrorMutating,
@@ -92,6 +92,7 @@ const EditUsuarioEmpresa = ({ usuario }) => {
           submitFunction={handleSubmit}
           btnText="Guardar"
           scroll={true}
+          closeForm={closeModal}
         />
       </div>
       <Alerts

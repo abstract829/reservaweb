@@ -10,6 +10,12 @@
 .button{
   @apply px-4 py-2 text-white bg-[#908161]
 }
+.button-secondary{
+  @apply px-4 py-2 text-white bg-[#19191A] border-2 border-solid border-[#908161] hover:bg-[#908161]
+}
+.button-cancel{
+  @apply px-4 py-2 text-white bg-slate-600
+}
 .input{
   @apply mb-2 rounded border-2 border-[#908161] p-2
 }
@@ -71,3 +77,6 @@
   }
 }
 /*SPINNER LOADER*/
+.pro-sidebar-layout{
+  overflow-y: hidden !important;
+}
