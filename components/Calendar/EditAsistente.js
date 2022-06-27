@@ -94,6 +94,7 @@ const EditAsistente = ({ setAsistentes, closeModal, asistente }) => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           submitFunction={handleSubmit}
+          closeForm={closeModal}
           btnText="Guardar"
           scroll={true}
         />

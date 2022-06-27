@@ -95,6 +95,7 @@ const AddAsistente = ({ setAsistentes, closeModal }) => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           submitFunction={handleSubmit}
+          closeForm={closeModal}
           btnText="Guardar"
           scroll={true}
         />
