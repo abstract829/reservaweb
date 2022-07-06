@@ -63,7 +63,7 @@ const FormikReserva = ({
                   options={input.options ? input.options : null}
                 />
               ))}
-              <div>
+              <div className="">
                 <p className="mb-2 font-bold text-[#908161]">
                   ¿Como se informó de este tour?
                 </p>

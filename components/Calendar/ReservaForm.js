@@ -8,13 +8,7 @@ import FormikReserva from '../FormikForm/FormikReserva'
 
 const ReservaForm = ({ precio = '', closeModal }) => {
   const router = useRouter()
-  const {
-    setDatosAsistentePrincipal,
-    hasAsistentes,
-    reservaRequest,
-    validLimitAsistentes,
-    resetReserva,
-  } = useReserva()
+  const { reservaRequest, validLimitAsistentes, resetReserva } = useReserva()
   const { mutate: realizarReserva, isError, isSuccess } = useMutateReserva()
   const inputForms = [
     {
@@ -67,6 +61,11 @@ const ReservaForm = ({ precio = '', closeModal }) => {
       name: 'Ciudad',
       placeholder: '',
     },
+    {
+      label: 'Cantidad de asistentes',
+      type: 'number',
+      name: 'CantidadPersonas',
+    },
   ]
   const initialValues = {
     NumeroDocumento: '',
@@ -79,6 +78,7 @@ const ReservaForm = ({ precio = '', closeModal }) => {
     PaisId: '1',
     ComoSeEntero: '',
     Ciudad: '',
+    CantidadPersonas: '',
   }
   const validationSchema = Yup.object().shape({
     CorreoElectronico: Yup.string()
@@ -94,6 +94,7 @@ const ReservaForm = ({ precio = '', closeModal }) => {
     PaisId: Yup.string().required('El campo es obligatorio'),
     ComoSeEntero: Yup.string().required('El campo es obligatorio'),
     Ciudad: Yup.string().required('El campo es obligatorio'),
+    CantidadPersonas: Yup.string().required('El campo es obligatorio'),
   })
   useEffect(() => {
     if (isSuccess) {
@@ -103,16 +104,18 @@ const ReservaForm = ({ precio = '', closeModal }) => {
   }, [isSuccess])
 
   const handleSubmit = async (values) => {
-    // setDatosAsistentePrincipal(values)
-    if (validLimitAsistentes()) {
+    if (validLimitAsistentes(values.CantidadPersonas)) {
       realizarReserva({
         ...reservaRequest,
         AsistentePrincipal: values,
         ComoSeEntero: values.ComoSeEntero,
+        CantidadPersonas: values.CantidadPersonas,
         RequerimientosEspeciales: values.RequerimientosEspeciales,
       })
     } else {
-      throw new Error('Solo puede haber un maximo de 10 asistentes')
+      throw new Error(
+        'La cantidad de asistentes no coinciden con el campo ingresado.'
+      )
     }
   }
   return (
