@@ -9,7 +9,7 @@ const ThanksPage = () => {
           <p>Gracias por su solicitud!</p>
           <p>Nos pondremos en contacto con usted</p>
           <button className="mt-12 button" onClick={() => router.push('/')}>
-            Volver a la reserva
+            Volver
           </button>
         </div>
       </div>
